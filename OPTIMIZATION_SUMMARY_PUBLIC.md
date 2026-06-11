@@ -1,8 +1,12 @@
+# Public Repository Note
+
+**This repository includes a high-level optimization summary for portfolio and LinkedIn presentation. The full detailed optimization report contains timing-report screenshots, waveform verification, code snippets, and deeper root-cause analysis, and is kept private unless deeper technical review is needed.**
+
 # Optimization Summary
 
 ## 32-bit Pipelined MIPS CPU FPGA Optimization
 
-This document summarizes the FPGA optimization work completed for a custom 32-bit pipelined MIPS CPU. The public version is intentionally high-level: it focuses on the optimization goals, timing results, architectural changes, and tradeoffs without exposing the full detailed implementation report.
+This document summarizes the FPGA optimization work completed for a custom 32-bit pipelined MIPS CPU. It focuses on the optimization goals, timing results, architectural changes, and tradeoffs without exposing the full detailed implementation report.
 
 The optimization work focused on improving FPGA timing closure, reducing critical-path delay, and keeping the processor functional on a Basys 3 FPGA.
 
@@ -16,15 +20,15 @@ The main steps were:
 
 1. Implement the CPU on FPGA.
 2. Analyze Vivado timing reports.
-3. Identify the critical path using WNS, logic delay, net delay, routing delay, and endpoint information.
+3. Identify the critical path using WNS, logic delay, net delay, routing delay, and schematic.
 4. Determine whether the bottleneck came from logic depth, routing distance, fanout, or a specific hardware block.
 5. Modify the architecture to reduce the bottleneck.
 6. Re-run implementation and compare timing, utilization, and power results.
 
 The main optimization techniques used were:
 
-- Converting high-latency arithmetic units into multicycle units
-- Splitting a large execute stage into smaller pipeline stages
+- Converting high delay arithmetic units into multicycle units
+- Splitting a large execute stage into smaller execute pipeline stages
 - Reducing long combinational paths
 - Reducing routing pressure between dependent hardware blocks
 - Re-verifying the design after timing changes
@@ -39,7 +43,7 @@ The main optimization techniques used were:
 | Execute Stage Split | 74.906 MHz | 96.618 MHz | 13.350 ns | 10.350 ns |
 | Multicycle Divider | 96.618 MHz | 94.340 MHz | 10.350 ns | 10.600 ns |
 
-The final optimized CPU met timing at approximately **94 MHz** after the divider was re-enabled and converted into a multicycle design.
+After optimizations, the final optimized CPU met timing at approximately **94 MHz**.
 
 ---
 
@@ -129,7 +133,7 @@ The extra pipeline stage improved timing but increased control complexity. Forwa
 
 ### Problem
 
-The original divider was a single-cycle unit. When re-enabled, it caused a severe timing failure because division does not map efficiently to FPGA DSP blocks and instead requires a large amount of LUT-based combinational logic.
+The original divider was a single-cycle unit. It caused a severe timing failure because division does not map efficiently to FPGA DSP blocks and instead requires a large amount of LUT-based combinational logic.
 
 The single-cycle divider caused:
 
@@ -143,7 +147,7 @@ The single-cycle divider caused:
 
 The divider was redesigned as a multicycle restoring divider. Instead of completing the full division in one cycle, it processes one bit per cycle for 32 cycles.
 
-The quotient is stored in LO, and the remainder is stored in HI.
+The quotient is stored in lower 32-bit register, and the remainder is stored in higher 32-bit register.
 
 ### Result
 
@@ -189,10 +193,4 @@ The final design achieved:
 - Functional multicycle multiply/divide support
 - A six-stage pipelined architecture with updated hazard handling
 
-The final optimized CPU was ready for FPGA demonstration and further architectural development.
-
 ---
-
-## Public Repository Note
-
-This repository includes a high-level optimization summary for portfolio and LinkedIn presentation. The full detailed optimization report contains timing-report screenshots, waveform verification, code snippets, and deeper root-cause analysis, and is kept private unless deeper technical review is needed.
