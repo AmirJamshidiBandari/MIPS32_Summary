@@ -9,13 +9,8 @@ The diagram shows the normal datapath, control signals, pipeline registers, and 
 The CPU is organized as a 6-stage pipeline:
 
 ```text
-IF → ID → EX1 → EX2 → ME → WB
-```
-
 The main instruction flow moves from left to right:
-
-```text
-Instruction Fetch → Decode → Operand Preparation → Execution → Memory → Writeback
+Instruction Fetch Stage (IF) → Instruction Decode Stage (ID) → Execute 1 Stage (EX1) → Execute Stage 2 (EX2) → Memory Stage (ME) → Writeback Stage (WB)
 ```
 
 The diagram includes both the normal instruction path and the extra forwarding, stalling, and flushing paths required for hazard handling.
@@ -49,7 +44,7 @@ ME/WB
 
 ## IF Stage: Instruction Fetch
 
-The Instruction Fetch stage selects the next program counter value and fetches the instruction from instruction memory.
+The Instruction Fetch stage selects the next program counter (PC) value and fetches the instruction from instruction memory.
 
 Main hardware in the IF stage:
 
@@ -60,7 +55,7 @@ PC Register
 PC Adder
 ```
 
-The PC writeback MUX selects the next PC value. This can come from normal sequential execution, a branch target, or a jump target. The PC register stores the current instruction address. The PC adder calculates the next sequential PC value.
+The PC writeback MUX selects the next program counter (PC) value. This can come from normal sequential execution, a branch target, or a jump target. The PC register stores the current instruction address. The PC adder calculates the next sequential PC value.
 
 ## ID Stage: Instruction Decode
 
@@ -131,7 +126,7 @@ The ALU handles normal arithmetic, logic, comparison, and address calculation op
 
 The multiplier and divider handle multicycle arithmetic operations.
 
-The HI and LO MUXes select the correct values for the HI/LO datapath.
+The HI and LO MUXes select the correct values between multiplier and divider for the HI/LO register.
 
 ## ME Stage: Memory and HI/LO Storage
 
@@ -154,6 +149,8 @@ IO 2
 ```
 
 The memory control unit selects whether the memory operation targets normal RAM or one of the memory-mapped I/O regions. This allows the CPU to communicate with FPGA I/O using normal load and store instructions.
+
+HI/LO register stores the result of divider or multiplier, which is used to write into main CPU register.
 
 ## WB Stage: Register Writeback
 
@@ -218,31 +215,6 @@ This allows dependent instructions to use recently computed values without waiti
 
 The orange datapath lines show forwarding-related data movement, while the brown signals show hazard-related control decisions.
 
-## Overall Diagram Meaning
 
-The full diagram represents more than a simple CPU datapath. It shows a complete hazard-aware pipelined CPU structure.
 
-The blue and green paths show the normal instruction datapath and control flow.
 
-The orange and brown paths show the additional forwarding, stalling, and hazard-control logic needed to keep the pipelined processor correct when instructions depend on each other.
-
-In summary, the diagram shows:
-
-```text
-Instruction fetch
-Instruction decode
-Register read
-Operand selection
-Branch and jump calculation
-ALU execution
-Multicycle multiplication and division
-HI/LO handling
-Memory-mapped RAM and I/O
-Register writeback
-Pipeline registers
-Forwarding logic
-Stall logic
-Control hazard flushing
-```
-
-This makes the diagram a complete high-level overview of the custom 32-bit pipelined MIPS32 CPU architecture.
