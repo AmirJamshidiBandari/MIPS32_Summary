@@ -72,8 +72,6 @@ ADDI
 J
 ```
 
-`MULTU` appears in the instruction definition module, but unsigned multiplication is not available in the current supported implementation.
-
 ## Repository Structure
 
 ```text
@@ -193,21 +191,3 @@ IO 2
 
 A memory control unit selects whether each memory operation targets normal RAM or one of the mapped I/O regions.
 
-## Upcoming Additions
-
-Planned public additions include:
-
-```text
-FPGA demo video
-FPGA board screenshots
-Waveform screenshots
-Example-specific Markdown explanations
-```
-
-Each example will include its own documentation explaining what is being tested or demonstrated.
-
-## Purpose of This Repository
-
-This repository is intended to present the project at a public summary level. It highlights the CPU architecture, verification approach, timing optimization process, and design decisions without exposing every internal debug file or full private verification report.
-
-The goal is to make the project understandable to recruiters, interviewers, and engineers reviewing the design.
