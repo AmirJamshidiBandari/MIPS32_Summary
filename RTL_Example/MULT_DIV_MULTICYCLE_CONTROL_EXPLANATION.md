@@ -8,7 +8,7 @@ This module was selected as an example because it connects several important par
 
 `Mult_Div_Multicycle_Control.sv` is the control logic for the multicycle multiplier and divider units.
 
-The module does not perform multiplication or division itself. Instead, it controls when the multiplier or divider should be active, detects when a dependent HI/LO instruction must stall, and enables the HI/LO register when the final multiplication or division result is ready.
+The module does not perform multiplication or division itself. Instead, it controls when the multiplier or divider should be active, detects when a dependent instruction must stall, and enables the HI/LO register when the final multiplication or division result is ready.
 
 The module controls five main behaviors:
 
@@ -16,7 +16,7 @@ The module controls five main behaviors:
 Starting a multiplication operation
 Starting a division operation
 Keeping the operation active while it is still running
-Stalling the CPU if an instruction depends on an unfinished HI/LO result
+Stalling the CPU if an instruction depends on an unfinished result
 Writing the completed multiplier or divider result into the HI/LO register
 ```
 
@@ -38,9 +38,9 @@ input alu_ctrl_t ALU_Control_EX2,
 input writeback_t Writeback_Control_ID,
 ```
 
-`ALU_Control_EX2` tells the module whether the instruction currently in EX2 is a multiply or divide instruction.
+`ALU_Control_EX2` tells the module whether the instruction currently in the 2nd execute stage (EX2) is a multiply or divide instruction.
 
-`Writeback_Control_ID` tells the module whether the instruction currently in the decode stage wants to read from HI or LO using an instruction such as `MFHI` or `MFLO`.
+`Writeback_Control_ID` tells the module whether the instruction currently in the decode stage wants to read from higher 32-bit result (HI) or lower 32-bit result (LO) using an instruction such as `MFHI` or `MFLO`.
 
 The module outputs control signals to the multiplier, divider, stall unit, HI/LO register, and HI/LO selection muxes:
 
@@ -91,7 +91,7 @@ This logic is needed because multiplication and division are not completed in on
 
 ## Stall Detection Logic
 
-The next part of the module detects whether the instruction in the decode stage depends on a HI/LO result that is not ready yet:
+The next part of the module detects whether the instruction in the decode stage depends on a multiplier/divider result that is not ready yet:
 
 ```systemverilog
 if (((Writeback_Control_ID == WB_HI) || (Writeback_Control_ID == WB_LO)) &&
@@ -148,15 +148,3 @@ This module is important because it connects multicycle execution with pipeline 
 Without this module, the CPU could incorrectly allow an `MFHI` or `MFLO` instruction to read from the HI/LO register before a multiplication or division operation has finished. That would cause incorrect results in the pipeline.
 
 By tracking multiplier and divider progress, generating stall signals, and enabling HI/LO writeback only when the result is ready, this module helps make multicycle arithmetic work correctly inside the pipelined CPU.
-
-In summary, this module shows how the processor coordinates:
-
-```text
-Multicycle arithmetic
-HI/LO result selection
-Pipeline stalling
-Control signal generation
-Correct execution of dependent instructions
-```
-
-This makes `Mult_Div_Multicycle_Control.sv` a strong example of how RTL control logic is used to manage real pipeline behavior.
