@@ -12,6 +12,8 @@ The original design performed multiplication in a single cycle. This made the mu
 
 Vivado timing analysis showed that the critical path was located in the execute stage.
 
+![Before fix waveform](/Optimization_Example/OPTIMIZATION_CRITICALPATH.png)
+
 The main path was:
 
 ```text
