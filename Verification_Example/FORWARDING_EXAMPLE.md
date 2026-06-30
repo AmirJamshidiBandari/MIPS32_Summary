@@ -56,15 +56,7 @@ Before the fix, the waveform showed that the final instruction did not receive t
 
 ![Before fix waveform](/Verification_Example/WAVEFORM_BEFORE.png)
 
-The final instruction depended on:
-
-```text
-Previous instruction: 00622020
-Loaded value from:    8C430000
-Final instruction:    00832820
-```
-
-The expected value for `ALU_input2` was `11`, but the waveform showed:
+Lets focus around time 80 sec, the expected value for `ALU_input2` was `11`, but the waveform showed:
 
 ```text
 ALU_input2 = 0
@@ -75,7 +67,13 @@ Because the second operand was incorrect, the final ALU result was also incorrec
 Instead of calculating:
 
 ```text
-15 + 11 = 26
+ALU_result_EX = 15 + 11 = 26
+```
+
+The ALU unit calculated:
+
+```text
+ALU_result_EX = 15 + 0 = 15
 ```
 
 the processor used the old register value and calculated the wrong result.
