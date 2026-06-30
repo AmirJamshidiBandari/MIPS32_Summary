@@ -84,7 +84,7 @@ The issue was a read-after-write timing mismatch in the register file.
 
 At the same time that the writeback stage was writing the loaded value into the register file, the decode stage was trying to read that same register.
 
-The loaded value became available at writeback, but the decode-stage register read still saw the old stored value before the new value was fully available.
+The loaded value became available at writeback, but the decode stage register read still saw the old stored value before the new value was fully available.
 
 In simple terms:
 
