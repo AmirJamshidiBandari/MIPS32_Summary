@@ -2,9 +2,7 @@
 
 This document shows one verification example from the pipelined MIPS32 CPU project. The test focuses on a chained dependency case where the processor must correctly handle both forwarding and stalling behavior.
 
-The issue exposed a read-after-write timing mismatch between the writeback stage and the decode stage. The fix was to add writeback-to-decode forwarding inside the register file read logic.
-
-> Image paths are placeholders. Rename the waveform images in your GitHub repository to match these paths, or edit the paths below after uploading the images.
+The issue exposed a read-after-write timing mismatch between the writeback stage and the decode stage. The fix was to add writeback to decode forwarding inside the register file read logic.
 
 ## Test Objective
 
@@ -25,16 +23,12 @@ The main waveform signals observed were:
 
 ```text
 instruction_EX
-instruction_ME
-instruction_WB
 ALU_input1
 ALU_input2
 ALU_result_EX
 load_word_WB
-Register1_Write_WB
 Forward1
-Forward2
-tempReg3
+Forward2   
 ```
 
 These signals were selected because they show the instruction flow through the pipeline, the ALU operand values, the writeback value, and the forwarding control behavior.
