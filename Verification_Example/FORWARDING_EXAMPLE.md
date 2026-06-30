@@ -1,4 +1,4 @@
-# Verification Example: Writeback-to-Decode Forwarding Fix
+# Verification Example: Writeback to Decode Forwarding Fix
 
 This document shows one verification example from the pipelined MIPS32 CPU project. The test focuses on a chained dependency case where the processor must correctly handle both forwarding and stalling behavior.
 
@@ -54,7 +54,7 @@ The value `15` comes from a previous arithmetic result, while the value `11` com
 
 Before the fix, the waveform showed that the final instruction did not receive the correct second operand.
 
-![Before fix waveform](./Images/writeback_decode_before_fix.png)
+![Before fix waveform](./Verification_Example/WAVEFORM_BEFORE.png)
 
 The final instruction depended on:
 
@@ -92,8 +92,8 @@ In simple terms:
 
 ```text
 Writeback stage was updating the register.
-Decode stage was reading the same register too early.
-The decode stage received the old value instead of the newest writeback value.
+But decode stage was reading the same register at same time.
+Therefore, the register outputted the old value instead of the newest writeback value.
 ```
 
 This caused `ALU_input2` to receive `0` instead of `11`.
@@ -107,9 +107,9 @@ Stall the pipeline for one extra cycle
 Forward the writeback value directly into the decode-stage register outputs
 ```
 
-Forwarding was the better solution because it avoids adding unnecessary stalls.
+Forwarding was the better solution because it avoids adding unnecessary stalls, and it makes the design less complicated.
 
-The fix was added inside the register file read logic. If the writeback stage is writing to the same register that the decode stage is reading, the register file output uses the writeback value directly instead of the old stored register value.
+The fix was added inside the register file read logic. If the writeback stage is writing to the same register that the decode stage is reading, the register file output must use the writeback value directly instead of the old stored register value.
 
 ### Before the Fix
 
@@ -124,18 +124,16 @@ end
 
 ### After the Fix
 
-After the fix, the register file checks whether the writeback destination matches either decode-stage source register:
+After the fix, the register file checks whether the writeback destination register matches one of the source registers:
 
 ```systemverilog
 always_comb begin
-    if ((Register1_Write_WB) && (data_in_address_WB != 0) &&
-        (data_in_address_WB == rs_ID))
+    if ((Register1_Write_WB) && (data_in_address_WB != 0) && (data_in_address_WB == rs_ID))
         data_out_1_ID = data_in_WB;
     else
         data_out_1_ID = register1[rs_ID];
 
-    if ((Register1_Write_WB) && (data_in_address_WB != 0) &&
-        (data_in_address_WB == rt_ID))
+    if ((Register1_Write_WB) && (data_in_address_WB != 0) && (data_in_address_WB == rt_ID))
         data_out_2_ID = data_in_WB;
     else
         data_out_2_ID = register1[rt_ID];
@@ -148,7 +146,7 @@ This bypasses the timing mismatch by sending the newest writeback value directly
 
 After adding writeback-to-decode forwarding, the waveform showed the correct value:
 
-![After fix waveform](./Images/writeback_decode_after_fix.png)
+![After fix waveform](./Verification_Example/WAVEFORM_AFTER.png)
 
 The waveform confirmed:
 
@@ -172,6 +170,4 @@ This verification example exposed a real pipeline timing issue between register 
 
 The original design allowed the decode stage to read an old register value while the writeback stage was updating that same register. This caused a chained dependency instruction to use the wrong operand.
 
-The issue was fixed by adding writeback-to-decode forwarding inside the register file read logic. After the fix, the decode stage receives the newest writeback value whenever the writeback destination matches one of the decode-stage source registers.
-
-This example demonstrates how waveform-based verification was used to find, analyze, fix, and confirm a pipeline hazard issue in the processor.
+The issue was fixed by adding writeback to decode forwarding inside the register file read logic. After the fix, the decode stage receives the newest writeback value whenever the writeback destination regsiter matches one of the source registers.
