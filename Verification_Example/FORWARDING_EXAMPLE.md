@@ -146,7 +146,7 @@ This bypasses the timing mismatch by sending the newest writeback value directly
 
 After adding writeback-to-decode forwarding, the waveform showed the correct value:
 
-![After fix waveform](./Verification_Example/WAVEFORM_AFTER.png)
+![After fix waveform](/Verification_Example/WAVEFORM_AFTER.png)
 
 The waveform confirmed:
 
