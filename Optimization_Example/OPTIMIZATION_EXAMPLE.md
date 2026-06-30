@@ -4,7 +4,7 @@ This document shows one FPGA optimization example from the pipelined MIPS32 CPU 
 
 ## Optimization Goal
 
-The goal of this optimization was to reduce the execute-stage critical path and increase the maximum stable FPGA clock frequency.
+The goal of this optimization was to reduce the execute stage critical path and increase the maximum stable FPGA clock frequency.
 
 The original design performed multiplication in a single cycle. This made the multiplier part of a long combinational path and limited the clock speed of the CPU.
 
@@ -28,11 +28,11 @@ WHS:               0.126 ns
 Failing endpoints: 0
 ```
 
-Although the design met timing at this clock period, the multiplier still dominated the execute-stage critical path and limited higher-frequency operation.
+Although the design met timing at this clock period, the multiplier still dominated the execute stage critical path and limited higher frequency operations.
 
 ## Root Cause
 
-The original multiplier was implemented as a single-cycle operation. This meant the CPU had to complete the full multiplication and route the result through the HI/LO selection path within one clock cycle.
+The original multiplier was implemented as a single cycle operation. This meant the CPU had to complete the full 32-bit multiplication and route the results through the HI/LO selection path within one clock cycle. HI/LO results selected by HI/LO selection MUXes are the Higher and Lower 32-bit values created by the 64-bit multiplication result.
 
 This created a long logic path because multiplication is more complex than simple ALU operations such as addition, subtraction, or bitwise logic.
 
@@ -48,8 +48,7 @@ always_comb begin
 
     case (ALU_Control_EX)
         ALU_MULT: begin
-            mult_result = $signed(data_out_1_EX_mux) *
-                          $signed(data_out_2_EX_mux);
+            mult_result = $signed(data_out_1_EX_mux) * $signed(data_out_2_EX_mux);
         end
     endcase
 end
@@ -74,9 +73,9 @@ Execution logic
 Output logic
 ```
 
-The control logic starts the multiplication, keeps the multiplier active while it is running, and signals when the result is ready.
+The control logic starts the multiplication, keeps the multiplier active while it is running, and signals when the result is ready, these values will be stored in HI/LO register.
 
-The execution logic performs the shift-and-add multiplication process over multiple cycles.
+The execution logic performs the shifting and addition process over multiple cycles to manually create a multiplication operation.
 
 The output logic sends the upper 32 bits to HI and the lower 32 bits to LO when the multiplication is complete.
 
@@ -84,7 +83,7 @@ The output logic sends the upper 32 bits to HI and the lower 32 bits to LO when 
 
 In the optimized version, multiplication only runs while the internal `Multiply` signal is active.
 
-At the start of the operation, the input operands are copied into internal multiplier registers. During each cycle, the multiplier checks the low bit of the second operand. If the bit is high, the shifted first operand is added into the 64-bit result.
+At the start of the operation, the input operands are copied into internal multiplier registers. During each cycle, the multiplier checks the lowest bit of the second operand. If the bit is high, the shifted first operand is added into the 64-bit result.
 
 The operands are then shifted, and the cycle counter advances.
 
@@ -173,16 +172,6 @@ However, this tradeoff was worthwhile because the single-cycle multiplier was li
 
 ## Conclusion
 
-The multiplier optimization successfully reduced the execute-stage timing pressure by moving multiplication from a single-cycle combinational operation to a multicycle operation.
+The multiplier optimization successfully reduced the execute stage timing pressure by moving multiplication from a single-cycle combinational operation to a multicycle operation.
 
 This improved the stable FPGA frequency from `59.988 MHz` to `74.906 MHz` while maintaining positive timing slack.
-
-The example shows an important hardware design tradeoff:
-
-```text
-Lower latency single-cycle operation
-vs.
-Higher clock frequency with multicycle execution
-```
-
-For this CPU, the multicycle multiplier was the better design choice because it improved FPGA timing closure and allowed the processor to run at a higher frequency.
