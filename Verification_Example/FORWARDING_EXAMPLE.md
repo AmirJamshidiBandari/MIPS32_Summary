@@ -54,7 +54,7 @@ The value `15` comes from a previous arithmetic result, while the value `11` com
 
 Before the fix, the waveform showed that the final instruction did not receive the correct second operand.
 
-![Before fix waveform](./Verification_Example/WAVEFORM_BEFORE.png)
+![Before fix waveform](/Verification_Example/WAVEFORM_BEFORE.png)
 
 The final instruction depended on:
 
