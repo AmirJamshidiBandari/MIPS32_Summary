@@ -30,7 +30,7 @@ Some paths contain a `/` symbol with a number beside it. This means several rela
 
 ## Pipeline Register Boundaries
 
-The vertical yellow blocks represent pipeline registers. These registers separate the CPU into stages and store datapath values, control signals, destination register addresses, and hazard-related information as instructions move through the pipeline.
+The vertical yellow blocks represent pipeline registers. These registers separate the CPU into stages and store datapath values, control signals, and hazard-related information as instructions move through the pipeline.
 
 The pipeline registers are:
 
@@ -130,7 +130,7 @@ The HI and LO MUXes select the correct values between multiplier and divider for
 
 ## ME Stage: Memory and HI/LO Storage
 
-The Memory stage handles data memory access and stores HI/LO results.
+The Memory stage handles storing HI/LO results, memory access and data storage.
 
 Main hardware in the ME stage:
 
@@ -148,7 +148,7 @@ IO 1
 IO 2
 ```
 
-The memory control unit selects whether the memory operation targets normal RAM or one of the memory-mapped I/O regions. This allows the CPU to communicate with FPGA I/O using normal load and store instructions.
+The memory control unit selects whether the memory operation targets normal RAM or one of the memory-mapped I/O regions. This allows the CPU to communicate with FPGA I/O using normal load and store instructions, and it allows futureproof upgrades.
 
 HI/LO register stores the result of divider or multiplier, which is used to write into main CPU register.
 
