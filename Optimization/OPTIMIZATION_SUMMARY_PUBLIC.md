@@ -1,6 +1,6 @@
 # Public Repository Note
 
-**This repository includes a general optimization summary for portfolio and LinkedIn presentation. The full detailed optimization report contains timing-report screenshots, waveform verification, code snippets, and deeper root-cause analysis, and is kept private unless deeper technical review is needed.**
+**This repository includes a general optimization summary for portfolio and LinkedIn presentation. The full detailed optimization report contains timing-report screenshots, waveform verification, code snippets, and deeper root-cause analysis, is kept private unless deeper technical review is needed.**
 
 # Optimization Summary
 
@@ -18,12 +18,13 @@ The optimization process was based on FPGA timing analysis.
 
 The main steps were:
 
-1. Implement the CPU on FPGA.
-2. Analyze Vivado timing reports.
-3. Identify the critical path using WNS, logic delay, net delay, routing delay, and schematic.
-4. Determine whether the bottleneck came from logic depth, routing distance, fanout, or a specific hardware block.
-5. Modify the architecture to reduce the bottleneck.
-6. Re-run implementation and compare timing, utilization, and power results.
+1. Synthesise and implement the CPU on FPGA.
+2. Confirm number of failing endpoints by using the correct clock period.
+3. Analyze Vivado timing reports.
+4. Identify the critical path using WNS, logic delay, net delay, and schematic.
+5. Determine whether the bottleneck came from combinational logic depth, routing distance, fanout, or a specific hardware block.
+6. Modify the architecture to reduce the bottleneck.
+7. Re-run implementation and compare timing, utilization, and power results.
 
 The main optimization techniques used were:
 
@@ -31,6 +32,7 @@ The main optimization techniques used were:
 - Splitting a large execute stage into smaller execute pipeline stages
 - Reducing long combinational paths
 - Reducing routing pressure between dependent hardware blocks
+- Decrease Look-Up Table (LUT) utilization and total on-chip power consumption
 - Re-verifying the design after timing changes
 
 ---
@@ -41,7 +43,7 @@ The main optimization techniques used were:
 |---|---:|---:|---:|---:|
 | Multicycle Multiplier | ~60 MHz | 74.906 MHz | 16.670 ns | 13.350 ns |
 | Execute Stage Split | 74.906 MHz | 96.618 MHz | 13.350 ns | 10.350 ns |
-| Multicycle Divider | 96.618 MHz | 94.340 MHz | 10.350 ns | 10.600 ns |
+| Active Multicycle Divider | ~10 MHz | 94.340 MHz | 10.350 ns | 10.600 ns |
 
 After optimizations, the final optimized CPU met timing at approximately **94 MHz**.
 
@@ -93,7 +95,7 @@ The bottleneck included:
 - Multiplier/divider input forwarding
 - Arithmetic execution
 
-The timing report showed that routing delay became a major part of the critical path.
+The timing report showed that routing delay and combinational logic pressure became a major part of the critical path.
 
 ### Optimization
 
@@ -147,8 +149,6 @@ The single-cycle divider caused:
 
 The divider was redesigned as a multicycle restoring divider. Instead of completing the full division in one cycle, it processes one bit per cycle for 32 cycles.
 
-The quotient is stored in lower 32-bit register, and the remainder is stored in higher 32-bit register.
-
 ### Result
 
 | Metric | Before | After |
@@ -188,8 +188,8 @@ The final design achieved:
 
 - Positive timing slack
 - Reduced critical-path delay
-- Lower divider LUT usage
-- Lower divider power usage
+- Lower LUT usage
+- Lower power usage
 - Functional multicycle multiply/divide support
 - A six-stage pipelined architecture with updated hazard handling
 
