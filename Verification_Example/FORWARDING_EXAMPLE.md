@@ -2,7 +2,7 @@
 
 This document shows one verification example from the pipelined MIPS32 CPU project. The test focuses on a chained dependency case where the processor must correctly handle both forwarding and stalling behavior.
 
-The issue exposed a read-after-write timing mismatch between the writeback stage and the decode stage. The fix was to add writeback to decode forwarding inside the register file read logic.
+The issue exposed a read-after-write timing mismatch between the writeback stage and the decode stage. The fix was to forward writeback data into the decode stage and replace outputted register operands.
 
 ## Test Objective
 
