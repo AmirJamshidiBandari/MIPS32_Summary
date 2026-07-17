@@ -23,6 +23,16 @@ Language: SystemVerilog
 Tool: Vivado
 ```
 
+## FPGA Demo
+
+A 3-minute 24-second video demonstrates the processor architecture, test instruction sequence, waveform verification, FPGA verification, timing report, and critical-path analysis.
+
+**[▶ Watch the full Pipelined MIPS32 demo on YouTube](https://www.youtube.com/watch?v=ER6JITL76eQ)**
+
+Additional demo information is available here:
+
+- [Demo video details](Demo_Video/DEMO_YOUTUBE.md)
+
 ## Supported Instructions
 
 The processor supports the following MIPS32-style instruction subset.
@@ -58,6 +68,26 @@ ADDI
 ```text
 J
 ```
+
+## RTL Module Example
+
+A documented RTL example is included to show how an individual control module interacts with the larger processor architecture.
+
+The selected module, `Mult_Div_Multicycle_Control.sv`, coordinates the multicycle multiplier and divider by:
+
+```text
+Starting and maintaining multicycle operations
+Tracking multiplier and divider progress
+Detecting dependent MFHI and MFLO instructions
+Generating pipeline stall signals
+Selecting completed multiplier or divider results
+Enabling writes to the HI/LO register
+```
+
+This module was selected because it connects the control unit, multiplier, divider, stall unit, HI/LO multiplexers, and HI/LO register.
+
+- [Read the RTL module explanation](RTL_Example/MULT_DIV_MULTICYCLE_CONTROL_EXPLANATION.md)
+- [View the SystemVerilog module](RTL_Example/Mult_Div_Multicycle_Control.sv)
 
 ## Architecture Diagram
 
@@ -161,4 +191,3 @@ IO 2
 ```
 
 A memory control unit selects whether each memory operation targets normal RAM or one of the mapped I/O regions.
-
