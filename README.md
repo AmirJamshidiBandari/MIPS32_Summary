@@ -23,19 +23,6 @@ Language: SystemVerilog
 Tool: Vivado
 ```
 
-## Key Highlights
-
-```text
-6-stage pipelined CPU architecture
-Pipeline verification with hazard-focused testing
-Forwarding, stalling, and control hazard handling
-Multicycle multiplier and divider support
-HI/LO register datapath
-Memory-mapped RAM and I/O
-FPGA timing optimization from critical-path analysis
-Public architecture, verification, and optimization documentation
-```
-
 ## Supported Instructions
 
 The processor supports the following MIPS32-style instruction subset.
@@ -70,22 +57,6 @@ ADDI
 
 ```text
 J
-```
-
-## Repository Structure
-
-```text
-Diagram/
-  DIAGRAM_EXPLANATION.md
-  MIPS32_FULL_DIAGRAM.png
-
-Optimization/
-  OPTIMIZATION_SUMMARY_PUBLIC.md
-
-Verification/
-  VERIFICATION_SUMMARY_PUBLIC.md
-
-README.md
 ```
 
 ## Architecture Diagram
