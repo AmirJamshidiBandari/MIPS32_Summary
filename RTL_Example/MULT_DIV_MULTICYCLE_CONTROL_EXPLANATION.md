@@ -94,13 +94,11 @@ This logic is needed because multiplication and division are not completed in on
 The next part of the module detects whether the instruction in the decode stage depends on a multiplier/divider result that is not ready yet:
 
 ```systemverilog
-if (((Writeback_Control_ID == WB_HI) || (Writeback_Control_ID == WB_LO)) &&
-    (cycle_mult < 6'd32) && Multiply) begin
+if (((Writeback_Control_ID == WB_HI) || (Writeback_Control_ID == WB_LO)) && (cycle_mult < 6'd32) && Multiply) begin
     stall_mult = 1;
 end
 
-if (((Writeback_Control_ID == WB_HI) || (Writeback_Control_ID == WB_LO)) &&
-    (cycle_div < 6'd33) && Divide) begin
+if (((Writeback_Control_ID == WB_HI) || (Writeback_Control_ID == WB_LO)) && (cycle_div < 6'd33) && Divide) begin
     stall_div = 1;
 end
 ```
