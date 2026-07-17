@@ -133,7 +133,7 @@ Combined pipeline hazard cases
 ```
 
 - [Read the verification summary](Verification/VERIFICATION_SUMMARY_PUBLIC.md)
-- [Read the verification example](Verification_example/FORWARDING_EXAMPLE.md)
+- [Read the verification example](Verification_Example/FORWARDING_EXAMPLE.md)
 
 ## FPGA Optimization Summary
 
@@ -150,7 +150,7 @@ Timing closure on Basys 3
 ```
 
 - [Read the optimization summary](Optimization/OPTIMIZATION_SUMMARY_PUBLIC.md)
-- [Read the optimization example](Optimization_example/OPTIMIZATION_EXAMPLE.md)
+- [Read the optimization example](Optimization_Example/OPTIMIZATION_EXAMPLE.md)
 
 ## Hazard Handling
 
