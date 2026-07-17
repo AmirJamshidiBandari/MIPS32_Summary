@@ -91,7 +91,6 @@ This module was selected because it connects the control unit, multiplier, divid
 
 ## Architecture Diagram
 
-The full CPU pipeline diagram is stored in the `Diagram/` folder.
 
 The diagram explains the complete processor structure, including:
 
@@ -112,11 +111,8 @@ Stall logic
 Control hazard flushing
 ```
 
-For a detailed explanation of the diagram, see:
-
-```text
-Diagram/DIAGRAM_EXPLANATION.md
-```
+- [Read the diagram explanation](Diagram/DIAGRAM_EXPLANATION.md)
+- [View the detailed diagram](Diagram/MIPS32_FULL_DIAGRAM.png)
 
 ## Verification Summary
 
@@ -136,11 +132,8 @@ Multicycle arithmetic behavior
 Combined pipeline hazard cases
 ```
 
-For the public verification summary, see:
-
-```text
-Verification/VERIFICATION_SUMMARY_PUBLIC.md
-```
+- [Read the verification summary](Verification/VERIFICATION_SUMMARY_PUBLIC.md)
+- [Read the verification example](Verification_example/FORWARDING_EXAMPLE.md)
 
 ## FPGA Optimization Summary
 
@@ -156,11 +149,8 @@ FPGA frequency improvement
 Timing closure on Basys 3
 ```
 
-For the public optimization summary, see:
-
-```text
-Optimization/OPTIMIZATION_SUMMARY_PUBLIC.md
-```
+- [Read the optimization summary](Optimization/OPTIMIZATION_SUMMARY_PUBLIC.md)
+- [Read the optimization example](Optimization_example/OPTIMIZATION_EXAMPLE.md)
 
 ## Hazard Handling
 
