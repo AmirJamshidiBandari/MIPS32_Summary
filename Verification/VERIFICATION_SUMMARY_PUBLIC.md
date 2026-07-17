@@ -6,7 +6,7 @@
 
 ## 32-bit MIPS CPU Verification
 
-This document summarizes the verification work completed for a custom 32-bit MIPS CPU. It describes the verification approach, the main design areas tested, the types of issues found, and the final result without exposing the full waveform-by-waveform verification reports.
+This document summarizes the verification work completed for a custom 32-bit MIPS CPU. It describes the verification approach, the main design areas tested, the types of issues found, and the final result without exposing the full waveform by waveform verification reports.
 
 The full verification was completed in two stages:
 
@@ -17,13 +17,13 @@ The full verification was completed in two stages:
 
 ## Verification Methodology
 
-The CPU was verified using a combination of instruction-memory test programs, SystemVerilog testbenches, waveform inspection, and self-checking tests.
+The CPU was verified using a combination of instruction test programs, SystemVerilog testbenches, waveform inspection, and self-checking tests.
 
 The verification process focused on:
 
 - Confirming correct instruction execution
 - Checking register and memory updates
-- Validating control-signal behavior
+- Validating control signal behavior
 - Debugging incorrect or undefined signal behavior
 - Re-testing each fixed module
 - Verifying the complete CPU after individual modules were tested
@@ -40,7 +40,7 @@ The single-cycle verification focused on proving that the base CPU datapath work
 
 | Area | Verified Components |
 |---|---|
-| PC Flow | PC increment, branch target selection, jump target selection, next-PC selection |
+| PC Flow | PC increment, branch target selection, jump target selection, next PC selection |
 | Arithmetic Units | ALU, multiplier, divider |
 | Register and Memory | HI/LO register, register file, data memory |
 | Control Logic | Instruction decoder, main control unit |
@@ -57,7 +57,7 @@ During single-cycle verification, several issues were found and fixed:
 | Register file reset issue | A reset connection needed to be added so registers initialized predictably. |
 | Register `$0` overwrite | The register file originally allowed register `$0` to be overwritten, which violates the MIPS rule that `$0` must always stay zero. |
 
-After these fixes, the single-cycle CPU passed the module-level and system-level verification checks.
+After these fixes, the single-cycle CPU passed the module level and system level verification checks.
 
 ---
 
@@ -76,15 +76,15 @@ After the single-cycle CPU was verified, the design was expanded into a pipeline
 
 ### Main Pipeline Debugging Results
 
-The pipelined verification found and fixed several pipeline-specific issues:
+The pipelined verification found and fixed several pipeline issues:
 
 | Issue Type | Summary |
 |---|---|
 | Forwarding destination mismatch | Forwarding originally did not fully support both R-type and I-type destination registers. |
-| Unnecessary forwarding | Forwarding could trigger when an immediate operand should have been used instead. |
-| Store-data forwarding | Store instructions needed special handling because the address path and store-data path have different forwarding needs. |
+| Unnecessary forwarding | Forwarding could trigger, when an immediate operand should have been used instead. |
+| Store into memory forwarding | Store instructions needed special edge case handling, because the address path and store-data path have different forwarding needs. |
 | Duplicate stalls | A PC update timing issue caused duplicate instruction fetches, which created repeated stall behavior. |
-| Read-after-write timing | A decode-stage register read could see an old value while writeback was updating the same register. |
+| Read-after-write timing | A decode stage register file could read operand registers and store into them at the same cycle, reading old register values.  |
 
 Each issue was debugged, corrected, and reverified using waveform checks and self-checking testbench output.
 
