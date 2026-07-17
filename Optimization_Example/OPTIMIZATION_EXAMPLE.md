@@ -34,7 +34,7 @@ Although the design met timing at this clock period, the multiplier still domina
 
 ## Root Cause
 
-The original multiplier was implemented as a single cycle operation. This meant the CPU had to complete the full 32-bit multiplication and route the results through the HI/LO selection path within one clock cycle. HI/LO results selected by HI/LO selection MUXes are the Higher and Lower 32-bit values created by the 64-bit multiplication result.
+The original multiplier was implemented as a single cycle operation. This meant the CPU had to complete the full 32-bit multiplication and route the results through the HI/LO selection path within one clock cycle. HI/LO results selected by HI/LO selection MUXes are the Higher (HI) and Lower (LO) 32-bit values created by the 64-bit multiplication result.
 
 This created a long logic path because multiplication is more complex than simple ALU operations such as addition, subtraction, or bitwise logic.
 
@@ -79,7 +79,7 @@ The control logic starts the multiplication, keeps the multiplier active while i
 
 The execution logic performs the shifting and addition process over multiple cycles to manually create a multiplication operation.
 
-The output logic sends the upper 32 bits to HI and the lower 32 bits to LO when the multiplication is complete.
+The output logic sends the higher 32 bits to HI register and the lower 32 bits to LO register when the multiplication is complete.
 
 ## Multicycle Multiplier Behavior
 
