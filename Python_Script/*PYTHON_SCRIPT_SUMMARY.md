@@ -31,7 +31,7 @@ The reference model contains software versions of the processor's main component
 - Program counter
 - Register writeback
 
-The software model follows the same instruction-processing order:
+The software model follows the same hardware instruction processing order:
 
 ```text
 IF -> ID -> EX -> MEM -> WB
@@ -64,7 +64,7 @@ The automation stage manages the complete verification process.
 
 It:
 
-- Generates constrained-random MIPS32 instructions
+- Generates random constrained MIPS32 instructions
 - Writes the encoded instructions into `Instructions.mem`
 - Runs the program on the Python reference model
 - Compiles and runs the SystemVerilog RTL processor
@@ -86,29 +86,14 @@ write_instruction.py
 Instructions.mem
 ```
 
-`Instructions.mem` is generated automatically and contains the machine-code instructions used by both the Python reference model and the RTL processor.
+`Instructions.mem` is generated automatically and contains the machine code instructions used by both the Python reference model and the RTL processor.
 
 ---
 
 ## Verification Flow
 
 ```text
-Instruction Generator
-        |
-        v
- Instructions.mem
-     /       \
-    v         v
-Python Model  RTL Simulation
-     \       /
-      v     v
-   Result Comparison
-          |
-          v
-     PASS / FAIL
-          |
-          v
-       GTKWave
+
 ```
 
 ---
