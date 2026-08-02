@@ -166,7 +166,7 @@ python Automate.py
 
 The automation script will:
 
-1. Generate a constrained-random instruction program
+1. Generate a random constrained instruction program
 2. Write the instructions into `Instructions.mem`
 3. Run the Python reference model
 4. Compile and run the SystemVerilog RTL processor
