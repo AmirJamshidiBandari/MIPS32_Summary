@@ -90,28 +90,104 @@ Instructions.mem
 
 ---
 
+
 ## Verification Flow
 
 ![Flow](/Python_Script/Verification_flow.png)
 
 ---
-
 ## Running the Verification
 
-The automation script is designed to run the complete Python and RTL verification flow.
+The automation script runs the complete Python and RTL verification flow.
 
-Before running it, `RTL_PROJECT_FOLDER` inside `Automate.py` must point to the local folder containing the SystemVerilog RTL files, `files.f`, and the testbench.
+### Requirements
+
+The verification flow requires:
+
+- Python 3.10 or newer
+- WSL
+- Icarus Verilog
+- GTKWave
+- The SystemVerilog RTL files
+- The SystemVerilog testbench
+- The `files.f` file
+
+### RTL Project Location
+
+Before running the verification, update `RTL_PROJECT_FOLDER` inside `Automate.py` so it points to the local RTL project folder as seen from WSL.
 
 ```python
 RTL_PROJECT_FOLDER = "/path/to/rtl/project"
-
-Run the automation script at:
-Automate.py
 ```
 
-The script generates a new instruction program, runs both processor models, compares their final states, and opens GTKWave.
+This folder must contain the SystemVerilog source files, testbench, and `files.f`.
 
-For a new test, change the `SEED` value inside `Automate.py`.
+For example:
+
+```python
+RTL_PROJECT_FOLDER = "/home/username/MIPS32_Project/rtl"
+```
+
+### File Location Requirements
+
+All Python verification files should remain in the same folder.
+
+`write_instruction.py` creates `Instructions.mem` in this folder, and `Instruction_memory.py` reads the same file.
+
+The Python reference model automatically creates:
+
+```text
+final_register_results_python.txt
+final_memory_results_python.txt
+final_io1_results_python.txt
+final_io2_results_python.txt
+```
+
+The SystemVerilog testbench must create the following files in the same Python verification folder:
+
+```text
+final_register_results_rtl.txt
+final_memory_results_rtl.txt
+final_io1_results_rtl.txt
+final_io2_results_rtl.txt
+```
+
+`compare_results.py` reads these files and compares the Python and RTL architectural states.
+
+The filenames and capitalization must remain unchanged.
+
+### Run the Verification
+
+From the Python verification folder, run:
+
+```bash
+python Automate.py
+```
+
+The automation script will:
+
+1. Generate a constrained-random instruction program
+2. Write the instructions into `Instructions.mem`
+3. Run the Python reference model
+4. Compile and run the SystemVerilog RTL processor
+5. Save the final register, RAM, IO1, and IO2 states
+6. Compare the Python and RTL results
+7. Report a final PASS or FAIL result
+8. Open the generated waveform in GTKWave
+
+### Random Seed
+
+The generated instruction program is controlled by the `SEED` value inside `Automate.py`.
+
+```python
+SEED = 5
+```
+
+Using the same seed generates the same random instruction sequence. This allows a failed test to be reproduced and investigated.
+
+Change the seed value to generate a different test program.
+
+### Example Result
 
 A successful run produces output similar to:
 
