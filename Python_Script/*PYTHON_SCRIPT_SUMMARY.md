@@ -98,13 +98,20 @@ Instructions.mem
 
 ## Running the Verification
 
-Run the automation script:
+The automation script is designed to run the complete Python and RTL verification flow.
 
-```bash
-python Automate.py
+Before running it, `RTL_PROJECT_FOLDER` inside `Automate.py` must point to the local folder containing the SystemVerilog RTL files, `files.f`, and the testbench.
+
+```python
+RTL_PROJECT_FOLDER = "/path/to/rtl/project"
+
+Run the automation script at:
+Automate.py
 ```
 
 The script generates a new instruction program, runs both processor models, compares their final states, and opens GTKWave.
+
+For a new test, change the `SEED` value inside `Automate.py`.
 
 A successful run produces output similar to:
 
