@@ -26,7 +26,7 @@ PYTHON_FOLDER = os.path.dirname(os.path.abspath(__file__))
 os.chdir(PYTHON_FOLDER)
 
 # The WSL folder containing the SystemVerilog project.
-RTL_PROJECT_FOLDER = "../rtl"
+RTL_PROJECT_FOLDER = "/home/username/MIPS32_Project/rtl"
 
 INSTRUCTION_NUMBERS = 32
 SEED = 5
