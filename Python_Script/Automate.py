@@ -32,12 +32,7 @@ INSTRUCTION_NUMBERS = 32
 SEED = 5
 MAX_FAILED_ATTEMPTS = 1000
 
-RTL_RESULT_FILES = [
-    "final_register_results_rtl.txt",
-    "final_memory_results_rtl.txt",
-    "final_io1_results_rtl.txt",
-    "final_io2_results_rtl.txt"
-]
+RTL_RESULT_FILES = ["final_register_results_rtl.txt", "final_memory_results_rtl.txt", "final_io1_results_rtl.txt","final_io2_results_rtl.txt"]
 
 
 """
@@ -59,28 +54,15 @@ def generate_program():
     while cycle < INSTRUCTION_NUMBERS:
         random_instruction = random_variables()
 
-        generated_instruction, initialized_registers, skip_instruction, initialized_memory = (
-            instruction_generator(
-                random_instruction,
-                cycle,
-                INSTRUCTION_NUMBERS,
-                False
-            )
-        )
+        generated_instruction, initialized_registers, skip_instruction, initialized_memory = (instruction_generator(random_instruction,cycle,INSTRUCTION_NUMBERS,False))
 
         if skip_instruction:
-            print(
-                f"Automate: In cycle {cycle + 1}, generated instruction "
-                "not written into instruction memory.\n"
-            )
+            print(f"Automate: In cycle {cycle + 1}, generated instruction not written into instruction memory.\n")
 
             failed_attempts += 1
 
             if failed_attempts >= MAX_FAILED_ATTEMPTS:
-                raise RuntimeError(
-                    f"Could not generate a valid instruction for cycle "
-                    f"{cycle + 1} after {MAX_FAILED_ATTEMPTS} attempts."
-                )
+                raise RuntimeError(f"Could not generate a valid instruction for cycle {cycle + 1} after {MAX_FAILED_ATTEMPTS} attempts.")
 
             # Retry the same cycle.
             continue
@@ -141,9 +123,7 @@ def run_rtl_simulation():
 
     print("\n================ RUNNING RTL SIMULATION ================\n")
 
-    simulation = subprocess.run(
-        ["wsl", "bash", "-lc", rtl_command]
-    )
+    simulation = subprocess.run(["wsl", "bash", "-lc", rtl_command])
 
     if simulation.returncode != 0:
         raise RuntimeError("The RTL compilation or simulation failed.")
@@ -151,9 +131,7 @@ def run_rtl_simulation():
     # Make sure the testbench created every required result file.
     for filename in RTL_RESULT_FILES:
         if not os.path.exists(filename):
-            raise FileNotFoundError(
-                f"The RTL simulation did not create {filename}"
-            )
+            raise FileNotFoundError(f"The RTL simulation did not create {filename}")
 
 
 """
@@ -162,9 +140,7 @@ Run compare_results.py and stop if Python and RTL do not match.
 def compare_results():
     print("\n================ COMPARING RESULTS ================\n")
 
-    comparison = subprocess.run(
-        [sys.executable, "compare_results.py"]
-    )
+    comparison = subprocess.run([sys.executable, "compare_results.py"])
 
     if comparison.returncode != 0:
         raise RuntimeError("The Python and RTL results do not match.")
@@ -183,9 +159,7 @@ def open_gtkwave():
 
     print("\n================ OPENING GTKWAVE ================\n")
 
-    subprocess.Popen(
-        ["wsl", "bash", "-lc", gtkwave_command]
-    )
+    subprocess.Popen(["wsl", "bash", "-lc", gtkwave_command])
 
 
 """
