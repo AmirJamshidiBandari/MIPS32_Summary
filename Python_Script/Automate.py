@@ -25,8 +25,8 @@ from write_instruction import write_instruction
 PYTHON_FOLDER = os.path.dirname(os.path.abspath(__file__))
 os.chdir(PYTHON_FOLDER)
 
-# WSL folder containing the SystemVerilog project.
-RTL_PROJECT_FOLDER = "/home/rangeramir/sv_projects/MIPS_CPU_96MHz"
+# The WSL folder containing the SystemVerilog project.
+RTL_PROJECT_FOLDER = "../rtl"
 
 INSTRUCTION_NUMBERS = 32
 SEED = 5
