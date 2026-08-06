@@ -1,7 +1,3 @@
-# Public Repository Note
-
-**This repository is a verification summary for portfolio and LinkedIn presentation. The full detailed verification reports include extensive waveform evidence, test sequences, and root-cause debugging notes are kept private unless deeper technical review is needed.**
-
 # Verification Summary
 
 ## 32-bit MIPS CPU Verification
