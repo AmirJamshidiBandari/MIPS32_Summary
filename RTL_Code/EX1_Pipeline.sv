@@ -1,5 +1,7 @@
 import MIPS_Definitions::*;
-
+/*
+This is the pipeline register between decoder stage and second execute stage.
+*/
 module EX1_Pipeline (
     input logic clk,
     input logic reset,
