@@ -132,7 +132,7 @@ Multicycle arithmetic behavior
 Combined pipeline hazard cases
 ```
 
-- [Read the verification summary](Verification/VERIFICATION_SUMMARY_PUBLIC.md)
+- [Read the verification summary](Verification/VERIFICATION_SUMMARY.md)
 - [Read the verification example](Verification_Example/FORWARDING_EXAMPLE.md)
 
 ## FPGA Optimization Summary
@@ -149,7 +149,7 @@ FPGA frequency improvement
 Timing closure on Basys 3
 ```
 
-- [Read the optimization summary](Optimization/OPTIMIZATION_SUMMARY_PUBLIC.md)
+- [Read the optimization summary](Optimization/OPTIMIZATION_SUMMARY.md)
 - [Read the optimization example](Optimization_Example/OPTIMIZATION_EXAMPLE.md)
 
 ## Hazard Handling
