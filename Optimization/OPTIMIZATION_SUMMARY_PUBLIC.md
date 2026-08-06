@@ -1,7 +1,3 @@
-# Public Repository Note
-
-**This repository includes a general optimization summary for portfolio and LinkedIn presentation. The full detailed optimization report contains timing-report screenshots, waveform verification, code snippets, and deeper root-cause analysis, is kept private unless deeper technical review is needed.**
-
 # Optimization Summary
 
 ## 32-bit Pipelined MIPS CPU FPGA Optimization
