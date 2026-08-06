@@ -1,4 +1,7 @@
 import MIPS_Definitions::*;
+/*
+The ALU performs mathematical and logical operations, it picks the operation based on control unit signal.
+*/
 module ALU (
     input logic [31:0] ALU_input2_EX2,
     input logic [31:0] ALU_input1_EX2,
