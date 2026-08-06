@@ -9,7 +9,7 @@ module ALU_Sources(
 
 logic [31:0] imm_selected;
 
-assign imm_selected = ImmExt_ID ? sign_ext_imm32_ID : zero_ext_imm32_ID;
-assign data_out_2_ALUSrc_ID = ALUSrc_ID ? imm_selected : data_out_2_ID;
+assign imm_selected = ImmExt_ID ? sign_ext_imm32_ID : zero_ext_imm32_ID; // A multiplexer to pick between sign or zero extended immediate value, this is based on instruction.
+assign data_out_2_ALUSrc_ID = ALUSrc_ID ? imm_selected : data_out_2_ID; // A multiplexer to pick between second register value or the previous multiplexer value, this is based on instruction, the picked value will propagate through the pipeline. 
 
 endmodule
