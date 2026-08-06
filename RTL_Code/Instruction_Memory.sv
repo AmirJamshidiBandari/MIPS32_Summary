@@ -5,7 +5,7 @@ module Instruction_Memory (
 integer i;
 logic [31:0] memory [31:0];
 initial begin
-    $readmemh("/home/username/MIPS32_Project/rtl", memory);
+    $readmemh("/mnt/c/Users/YourPC/python/Instructions.mem", memory);
     $display("----------------INSTRUCTION MEMORY----------------\n");
     for (i = 0; i < 32; i = i + 1) begin
         $display("Instruction %0d = %08H", i, memory[i]);
