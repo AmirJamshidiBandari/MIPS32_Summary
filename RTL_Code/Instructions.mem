@@ -1,0 +1,21 @@
+20010005 // addi $1, $0, 5        // R1 = 5
+
+20020007 // addi $2, $0, 7        // R2 = 7
+
+00221820 // add  $3, $1, $2       // R3 = R1 + R2 = 12, forwarding from execute 2 stage and memory stage. 
+
+00612020 // add  $4, $3, $1       // R4 = R3 + R1 = 17, forwarding test from writeback stage and execute 2 stage. 
+
+AC040000 // sw   $4, 0($0)        // RAM[0] = 17, store value of register 4 into memory 0.
+
+8C050000 // lw   $5, 0($0)        // R5 = 17, load value of memory 0 into register 5.
+
+00A33020 // add  $6, $5, $3       // R6 = R5 + R3 = 29, stall for load-use and forward from writeback stage.
+
+00220018 // mult $1, $2           // R1 × R2 = 35,
+
+00003812 // mflo $7               // R7 = 35, stall for multicycle operation and store the lower 32-bit result into register 7.
+
+AC060100 // sw   $6, 0x0100($0)   // IO1 = 29, store value of register 6 into register 0 of IO1 memory.
+
+AC070200 // sw   $7, 0x0200($0)   // IO2 = 35, store value of register 7 into register 0 of IO2 memory.
