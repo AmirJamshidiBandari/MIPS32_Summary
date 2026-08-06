@@ -39,7 +39,7 @@ The main optimization techniques used were:
 |---|---:|---:|---:|---:|
 | Multicycle Multiplier | ~60 MHz | 74.906 MHz | 16.670 ns | 13.350 ns |
 | Execute Stage Split | 74.906 MHz | 96.618 MHz | 13.350 ns | 10.350 ns |
-| Active Multicycle Divider | ~10 MHz | 94.340 MHz | 10.350 ns | 10.600 ns |
+| Active Multicycle Divider | ~10 MHz | 94.340 MHz | ~96.3 ns | 10.600 ns |
 
 After optimizations, the final optimized CPU met timing at approximately **94 MHz**.
 
