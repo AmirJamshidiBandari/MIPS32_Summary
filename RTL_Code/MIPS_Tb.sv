@@ -54,7 +54,7 @@ initial begin
 
 
     // Registers
-    register_results_file = $fopen("/mnt/c/Users/amiry/OneDrive/Desktop/python/final_register_results_rtl.txt","w");
+    register_results_file = $fopen("/mnt/c/Users/YourPC/python/final_register_results_rtl.txt","w");
     if (register_results_file == 0) begin
         $display("ERROR: Could not open final_results_rtl.txt");
         $finish;
@@ -65,7 +65,7 @@ initial begin
     $fclose(register_results_file);
 
     // Memory
-    memory_results_file = $fopen("/mnt/c/Users/amiry/OneDrive/Desktop/python/final_memory_results_rtl.txt","w");
+    memory_results_file = $fopen("/mnt/c/Users/YourPC/python/final_memory_results_rtl.txt","w");
     if (memory_results_file == 0) begin
         $display("ERROR: Could not open final_memory_results_rtl.txt");
         $finish;
@@ -76,7 +76,7 @@ initial begin
     $fclose(memory_results_file);
 
     // IO1
-    io1_results_file = $fopen("/mnt/c/Users/amiry/OneDrive/Desktop/python/final_io1_results_rtl.txt","w");
+    io1_results_file = $fopen("/mnt/c/Users/YourPC/python/final_io1_results_rtl.txt","w");
     if (io1_results_file == 0) begin
         $display("ERROR: Could not open final_io1_results_rtl.txt");
         $finish;
@@ -87,7 +87,7 @@ initial begin
     $fclose(io1_results_file);
 
     // IO2
-    io2_results_file = $fopen("/mnt/c/Users/amiry/OneDrive/Desktop/python/final_io2_results_rtl.txt","w");
+    io2_results_file = $fopen("/mnt/c/Users/YourPC/python/final_io2_results_rtl.txt","w");
     if (io2_results_file == 0) begin
         $display("ERROR: Could not open final_io2_results_rtl.txt");
         $finish;
