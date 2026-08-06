@@ -2,7 +2,7 @@
 
 ## 32-bit MIPS CPU Verification
 
-This document summarizes the verification work completed for a custom 32-bit MIPS CPU. It describes the verification approach, the main design areas tested, the types of issues found, and the final result without exposing the full waveform by waveform verification reports.
+This document summarizes the verification work completed for a custom 32-bit MIPS CPU. It describes the verification approach, the main design areas tested, the types of issues found, and the final result.
 
 The full verification was completed in two stages:
 
