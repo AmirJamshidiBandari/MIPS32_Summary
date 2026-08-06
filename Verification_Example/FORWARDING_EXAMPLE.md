@@ -168,4 +168,4 @@ This verification example exposed a real pipeline timing issue between register 
 
 The original design allowed the decode stage to read an old register value while the writeback stage was updating that same register. This caused a chained dependency instruction to use the wrong operand.
 
-The issue was fixed by adding writeback to decode forwarding inside the register file read logic. After the fix, the decode stage receives the newest writeback value whenever the writeback destination regsiter matches one of the source registers.
+The issue was fixed by adding writeback to decode forwarding inside the register file read logic. After the fix, the decode stage receives the newest writeback value whenever the writeback destination register matches one of the source registers.
