@@ -1,5 +1,6 @@
 /*
-These are the two multiplexers of the HILO register, they decide whether to output higher or lower 32-bit results of multiplier or divider, the outputs will be stored into HILO register.
+These are the two multiplexers of the HILO register, they decide whether to output higher and lower 32-bit results of multiplier or divider, the outputs will be stored into HILO register.
+Multiplication sends the upper/lower halves of the product, while division sends remainder/quotient to HI/LO
 */
 module HILO_Register_Inputs(
     input logic [31:0] div_LO_EX2,
