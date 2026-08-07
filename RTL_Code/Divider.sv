@@ -61,7 +61,7 @@ end
 else if (Divide) begin
 
     // Start division.
-    // If contorl unit signal is divison and division cycle is zero, copy multiplexer values into a safe register.
+    // If control unit signal is divison and division cycle is zero, copy multiplexer values into a safe register.
     if (ALU_Control_EX2 == ALU_DIV && cycle_div == 0) begin
 
         div_operand_1 <= data_out_1_EX_mux_EX2;
@@ -80,7 +80,7 @@ else if (Divide) begin
     end
 end
 
-// Reset if there is no divison signal.
+// Reset if there is no division signal.
 else begin
     cycle_div <= 0;
     div_operand_1 <= 0;
