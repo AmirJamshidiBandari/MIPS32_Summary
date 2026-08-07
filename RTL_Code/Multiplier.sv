@@ -11,26 +11,6 @@ module Multiplier (
     output logic [5:0] cycle_mult
 );
 
-//logic signed [63:0] mult_result; 
-//logic [63:0] mult_resultu;
-//logic [31:0] mult_operand_1; 
-//logic [31:0] mult_operand_2;  
-//    always_comb begin
-//        mult_result  = 64'b0;
-//        mult_resultu = 64'b0;
-//        case (ALU_Control_EX)
-//            ALU_MULT: begin
-//                mult_result = $signed(data_out_1_EX_mux) * $signed(data_out_2_EX_mux);
-//            end
-//        endcase
-//    end
-//
-//    assign mult_HI_EX = (ALU_Control_EX == ALU_MULT) ? mult_result[63:32] : 32'b0;
-//    assign mult_LO_EX = (ALU_Control_EX == ALU_MULT) ? mult_result[31:0] : 32'b0;
-
-
-
-
 
 
 logic signed [63:0] mult_result; 
