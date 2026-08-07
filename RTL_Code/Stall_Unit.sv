@@ -1,4 +1,7 @@
 import MIPS_Definitions::*;
+/*
+This module handles stalling the processor in cases of lw, mult, and div instructions.
+*/
 module Stall_Unit (
     input logic [4:0] rt_EX1,
     input logic [4:0] rt_EX2,
