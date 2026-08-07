@@ -1,3 +1,9 @@
+/*
+This is the main register file, it uses data and address from writeback stage to store the data into a register, the address zero always stores value of zero and cant be overwritten.
+This module also handles forwarding from writeback stage into decoder stage, since data becoming available in writeback and storing it takes two cycles overall, then a register read and write can happen at same time.
+To prevent this timing issue, the module checks if writeback address matches a register read address, if yes then data is both stored and forwarded to solve timing issue.
+*/
+
 module Register_1 (
     input logic clk,
     input logic reset,
@@ -24,12 +30,13 @@ module Register_1 (
                 register1[i] <= 32'b0;
             end
         end
-        else if ((Register1_Write_WB) && (data_in_address_WB != 0)) begin
+        else if ((Register1_Write_WB) && (data_in_address_WB != 0)) begin // Store the data into a register.
             register1[data_in_address_WB] <= data_in_WB; 
         end
     end
-
-always_comb begin
+    
+// Solve read and write timing issue using forwarding.
+always_comb begin 
     if ((Register1_Write_WB) && (data_in_address_WB != 0) && (data_in_address_WB == rs_ID))
         data_out_1_ID = data_in_WB;
     else
