@@ -1,3 +1,7 @@
+/*
+Register destination can either come from a rt value or rd value, this depends on instruction type. 
+Therefore, a multiplexer and control unit signal is used to pick correct register address.
+*/
 module Register_Destination (
     input logic Register1_Destination_EX1,
     input logic [4:0] rd_EX1,
