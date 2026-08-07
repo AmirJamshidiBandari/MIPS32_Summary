@@ -1,4 +1,6 @@
 package MIPS_Definitions;
+
+// Instruction opcodes.
 typedef enum logic [5:0] {
     RTYPE = 6'b000000,
     LW    = 6'b100011,
@@ -10,6 +12,7 @@ typedef enum logic [5:0] {
     J     = 6'b000010
 } opcode_t;
 
+// R-type function codes.
 typedef enum logic [5:0] {
     ADD   = 6'b100000,
     AND   = 6'b100100,
@@ -24,6 +27,7 @@ typedef enum logic [5:0] {
     XOR   = 6'b100110
 } funct_t;
 
+// ALU operations.
 typedef enum logic [4:0] {
     ALU_NONE,
     ALU_ADD,
@@ -39,6 +43,7 @@ typedef enum logic [4:0] {
     ALU_XOR
 } alu_ctrl_t;
 
+// Register writeback paths.
 typedef enum logic [3:0] {
     WB_NONE,
     WB_ALU,
@@ -50,18 +55,21 @@ typedef enum logic [3:0] {
     WB_ADDI
 } writeback_t;
 
+// Program counter writeback paths.
 typedef enum logic [1:0] {
     PC_NEXT,
     PC_JUMP,
     PC_BRANCH
 } writeback_pc_t;
 
+// HILO register selection paths.
 typedef enum logic [1:0] {
     HILO_NONE,
     HILO_DIV,
     HILO_MULT
 } HILO_select_t;
 
+// First operand forwarding paths.
 typedef enum logic [3:0] {
     FRW1_NONE    = 4'b0000,
     FRW1_ALU_ME  = 4'b0001,
@@ -79,6 +87,7 @@ typedef enum logic [3:0] {
     FRW1_LUI_EX2   = 4'b1101
 } forward1_t;
 
+// Second operand forwarding paths.
 typedef enum logic [3:0] {
     FRW2_NONE    = 4'b0000,
     FRW2_ALU_ME  = 4'b0001,
