@@ -40,7 +40,7 @@ if (result < 0) begin
     next_div_operand_1[0] = 1'b0;
 end
 
-// If the result of subtraction is positive, set the dividend bit index zero equal to 1 and set remainder equal to subtraction result.
+// If the result of subtraction is non-negative, set the dividend bit index zero equal to 1 and set remainder equal to subtraction result.
 else begin
     next_div_operand_1[0] = 1'b1;
     next_remainder = result;
