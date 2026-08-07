@@ -1,4 +1,8 @@
+/*
+This is the top module, it connects all the RTL modules together, it also connected the FPGA clock, switches, and LEDs to the RTL modules.
+*/
 module MIPS (
+    // These inputs come from FPGA.
     input logic clk,
     input logic reset,
     input logic [15:0] switch,
