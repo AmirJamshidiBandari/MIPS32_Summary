@@ -1,4 +1,7 @@
 import MIPS_Definitions::*;
+/*
+These are the mult and div multiplexers, they pick between register values or forwarded values to be multiplier or divider operands.
+*/
 module MultiplierDivider_Inputs(
     input logic [31:0] data_out_2_EX1,
     input logic [31:0] data_out_1_EX1,
