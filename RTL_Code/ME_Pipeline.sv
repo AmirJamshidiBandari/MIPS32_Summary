@@ -1,6 +1,6 @@
 import MIPS_Definitions::*;
 /*
-This is the pipeline register between second execute stage and writeback stage.
+This is the pipeline register between memory stage and writeback stage.
 */
 module ME_Pipeline (
     input logic reset,
