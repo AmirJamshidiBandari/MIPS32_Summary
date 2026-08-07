@@ -1,5 +1,9 @@
 import MIPS_Definitions::*;
-
+/*
+In this unit forwarding decision is made, which data from which stage of the processor should be forwarded to first execute stage.
+This unit checks if current register destination matches the first (rs) or second (rt) register operand, or both in first execute stage.
+Based on the instruction in the second execute stage, it decides which datapath should be used to forward the data. 
+*/
 module Forward_Unit (
     input logic Register1_Write_EX2,
     input logic Register1_Write_ME,
@@ -23,7 +27,8 @@ module Forward_Unit (
     always_comb begin
         Forward1 = FRW1_NONE;
         Forward2 = FRW2_NONE;
-
+        
+    // Handle forwarding from second execute stage.
     if ((Register1_Write_EX2 == 1) && (data_in_address_EX2 != 0)) begin
         if ((data_in_address_EX2 == rs_EX1)) begin
             if (Writeback_Control_EX2 == WB_LUI)
@@ -48,6 +53,7 @@ module Forward_Unit (
         end
     end
 
+    // Handle forwarding from memory stage.
     if ((Register1_Write_ME == 1) && (data_in_address_ME != 0)) begin
         if ((data_in_address_ME == rs_EX1) &&  (Forward1 == FRW1_NONE)) begin
             if ((Writeback_Control_ME == WB_HI))
@@ -72,6 +78,7 @@ module Forward_Unit (
         end
     end
 
+// Handle forwarding from writeback stage.
     if ((Register1_Write_WB == 1) && (data_in_address_WB != 0)) begin
         if ((Forward1 == FRW1_NONE) && (data_in_address_WB == rs_EX1)) begin
             if ((Writeback_Control_WB == WB_HI))
