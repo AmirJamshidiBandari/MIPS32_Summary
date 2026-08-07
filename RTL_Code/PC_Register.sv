@@ -10,7 +10,7 @@ always_ff @(posedge clk or posedge reset)
 begin
     if (reset)
     pc <= 0;
-    else if (!Stall_PC) // If Stalling processor is false, store the next program counter value into the program counter register.
+    else if (!Stall_PC) // Update the PC when the pipeline is not stalled.
     pc <= next_pc;
 end
 
