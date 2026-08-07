@@ -1,5 +1,5 @@
 /*
-This is the first pipeline register
+This is the pipeline register between instruction fetch stage and instruction decode stage.
 */
 module IF_Pipeline (
     input logic clk,
