@@ -1,4 +1,7 @@
 import MIPS_Definitions::*;
+/*
+This is a memory multiplexer, it picks either second register value or a forwarded value should be stored into memory.
+*/
 module Memory_Input_Sources (
     input logic [31:0] data_out_2_EX1,
     input logic [31:0] ALU_result_ME,
