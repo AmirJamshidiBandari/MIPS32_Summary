@@ -44,12 +44,9 @@ HILO_select_t HILO_Select_ID;
 writeback_t Writeback_Control_ID;
 alu_ctrl_t ALU_Control_ID;
 
-
-// EX
+// EX1
 forward1_t Forward1;
 forward2_t Forward2;
-
-// EX1
 logic [31:0] ALU_input1_EX1;
 logic [31:0] ALU_input2_EX1;
 logic [31:0] data_out_2_EX_mux_EX1;
