@@ -1,6 +1,6 @@
 /*
-This is a memory-mapped IO, based on the 3rd hexadecimal value of the ALU result it will pick a memory to write or read from, the memories are RAM, IO1, and IO2. 
-The addressing is word-aligned, the ALU result itself is byte aligned, but dropping the first two bits and using ALU_result_ME[6:2] make is word aligned and easier to work with.
+This is a memory-mapped IO, based on the address bits [11:8] of the ALU result, it will pick a memory to write or read from, the memories are RAM, IO1, and IO2. 
+The addressing is word-aligned, the CPU itself uses byte addresses, but dropping the first two bits and using ALU_result_ME[6:2] makes it word aligned and easier to work with.
 */
 module Data_Memory_1 (
     input logic clk,
@@ -44,7 +44,7 @@ module Data_Memory_1 (
     always_comb begin
         case (signal_select)
             4'h0: load_word_ME = ram_1[output_select]; // Read from RAM.
-            4'h1: load_word_ME = io_1[output_select]; // Read from I01.
+            4'h1: load_word_ME = io_1[output_select]; // Read from IO1.
             4'h2: load_word_ME = io_2[output_select]; // Read from IO2.
             default: load_word_ME = 32'b0;
         endcase
