@@ -1,4 +1,7 @@
 import MIPS_Definitions::*;
+/*
+This is a register writeback multiplexer, based on control unit signal it outputs a data from multiple datapaths.
+*/
 module Register_Writeback_1 (
     input logic [31:0] ALU_result_WB,
     input logic [31:0] HI_result_WB,
