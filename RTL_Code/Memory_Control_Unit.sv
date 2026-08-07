@@ -1,3 +1,6 @@
+/*
+The memory control unit picks which memory to write to based on third hexadecimal value of ALU result.
+*/
 module Memory_Control_Unit (
     input logic [31:0] ALU_result_ME,
     output logic RAM_Write_ME,
