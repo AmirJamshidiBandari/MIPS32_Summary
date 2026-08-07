@@ -1,3 +1,6 @@
+/*
+Since program counter address increments by 4, each branch and jump instruction must have their immediate and target value shifted by 2 bits to match the program counter behavior.
+*/
 module Left_Shifter_2bit (
     input logic [31:0] sign_ext_imm32_EX1,
     input logic [25:0] target26_EX1,
