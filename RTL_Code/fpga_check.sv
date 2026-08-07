@@ -1,3 +1,6 @@
+/*
+This module connects the FPGA LEDs to the registers, it is used to compare simulation results with the FPGA results, if they match, the corresponding LEDs will turn on.
+*/
 module FPGA_Check(
     input logic [15:0] switch,
     input logic [31:0] Reg0, Reg1, Reg2, Reg3, Reg4, Reg5, Reg6, Reg7, Reg8, Reg9, Reg10, Reg11, Reg12, Reg13, Reg14, Reg15, Reg16, Reg17, Reg18, Reg19, Reg20, Reg21, Reg22, Reg23, Reg24, Reg25, Reg26, Reg27, Reg28, Reg29, Reg30, Reg31,
