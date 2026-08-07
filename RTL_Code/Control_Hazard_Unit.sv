@@ -1,6 +1,6 @@
 /*
-Since instructions run in parallel, any branch or jump taken in EX1 stage will make the instructions in ID and IF stage garbage, because the next target instruction is at different address and the in-order flow begins at different address,
-therefore the garbage instructions must be flushed.
+A taken branch or jump resolved in EX1 makes the younger instructions currently in IF and ID wrong-path instructions.
+These instructions are flushed before they can modify architectural state.
 */
 module Control_Hazard_Unit (
     input logic Branch_EX1,
