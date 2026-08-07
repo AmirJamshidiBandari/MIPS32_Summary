@@ -1,6 +1,7 @@
 import MIPS_Definitions::*;
 /*
 This is the pipeline register between instruction fetch stage and first execute stage.
+*/
 module ID_Pipeline (
     input logic reset,
     input logic clk,
