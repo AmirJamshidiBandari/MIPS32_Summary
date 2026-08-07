@@ -33,7 +33,7 @@ end
 initial begin
     // wait long enough for program to complete
     #3000;
-
+    // Display all the register and memory values.
     $display("----------------REGISTER VALUES----------------\n");
     for (i = 0; i < 32; i = i + 1) begin
         $display("Register[%0d] = %0d", i, CPU.reg1_file.register1[i]);      
@@ -60,7 +60,7 @@ initial begin
         $finish;
     end
     for (i = 0; i < 32; i = i + 1) begin
-        $fdisplay(register_results_file, "Register[%0d] = %0d",i,CPU.reg1_file.register1[i]);
+        $fdisplay(register_results_file, "Register[%0d] = %0d",i,CPU.reg1_file.register1[i]); // Write the register values into the file.
     end
     $fclose(register_results_file);
 
@@ -71,7 +71,7 @@ initial begin
         $finish;
     end
     for (i = 0; i < 32; i = i + 1) begin
-        $fdisplay(memory_results_file,"Memory[%0d] = %0d",i,CPU.mem_data.ram_1[i]);
+        $fdisplay(memory_results_file,"Memory[%0d] = %0d",i,CPU.mem_data.ram_1[i]); // Write the ram values into the file.
     end
     $fclose(memory_results_file);
 
@@ -82,7 +82,7 @@ initial begin
         $finish;
     end
     for (i = 0; i < 32; i = i + 1) begin
-        $fdisplay(io1_results_file,"IO1[%0d] = %0d",i,CPU.mem_data.io_1[i]);
+        $fdisplay(io1_results_file,"IO1[%0d] = %0d",i,CPU.mem_data.io_1[i]); // Write the IO1 values into the file.
     end
     $fclose(io1_results_file);
 
@@ -93,7 +93,7 @@ initial begin
         $finish;
     end
     for (i = 0; i < 32; i = i + 1) begin
-        $fdisplay(io2_results_file,"IO2[%0d] = %0d",i,CPU.mem_data.io_2[i]);
+        $fdisplay(io2_results_file,"IO2[%0d] = %0d",i,CPU.mem_data.io_2[i]); // Write the IO2 values into the file.
     end
     $fclose(io2_results_file);
 
