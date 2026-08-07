@@ -1,7 +1,8 @@
 /*
-This is the main register file, it uses data and address from writeback stage to store the data into a register, the address zero always stores value of zero and cant be overwritten.
-This module also handles forwarding from writeback stage into decoder stage, since data becoming available in writeback and storing it takes two cycles overall, then a register read and write can happen at same time.
-To prevent this timing issue, the module checks if writeback address matches a register read address, if yes then data is both stored and forwarded to solve timing issue.
+This module implements the processor's register file.
+Register writes occur during the WB stage. Register address 0 is hardwired to zero and cannot be overwritten.
+The module also provides a WB-to-ID bypass. If an instruction in the WB stage is writing to the same register that the instruction in the ID stage is currently reading, the new writeback value is returned directly, instead of the older value stored in the register array.
+This prevents the ID stage from reading stale data when a register read and write to the same address occur in the same clock cycle.
 */
 
 module Register_1 (
