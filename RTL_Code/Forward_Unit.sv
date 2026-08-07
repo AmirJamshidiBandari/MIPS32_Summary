@@ -2,7 +2,8 @@ import MIPS_Definitions::*;
 /*
 In this unit forwarding decision is made, which data from which stage of the processor should be forwarded to first execute stage.
 This unit checks if current register destination matches the first (rs) or second (rt) register operand, or both in first execute stage.
-Based on the instruction in the second execute stage, it decides which datapath should be used to forward the data. 
+Based on the instruction in the second execute stage, it decides which datapath should be used to forward the data.
+There is also a edge case with memory write, when storing a value into memory, no data should be forwarded, even if register addresses match, but at the same time the data loaded from memory should be forwaded, therefore the edge is handled using ((ALUSrc_EX1 == 0) || (Memory1_Write_EX1 == 1)).
 */
 module Forward_Unit (
     input logic Register1_Write_EX2,
@@ -29,13 +30,13 @@ module Forward_Unit (
         Forward2 = FRW2_NONE;
         
     // Handle forwarding from second execute stage.
-    if ((Register1_Write_EX2 == 1) && (data_in_address_EX2 != 0)) begin
-        if ((data_in_address_EX2 == rs_EX1)) begin
-            if (Writeback_Control_EX2 == WB_LUI)
+        if ((Register1_Write_EX2 == 1) && (data_in_address_EX2 != 0)) begin // Makse sure the instruction writes into a non-zero address register.
+            if ((data_in_address_EX2 == rs_EX1)) begin // if the register destination in second execute stage matches the first register operand in first execute stage.
+                if (Writeback_Control_EX2 == WB_LUI)  // Based on the instruction in second execute stage, forward from the correct datapath.
                 Forward1 = FRW1_LUI_EX2;
-            else if (Writeback_Control_EX2 == WB_HI)
+                else if (Writeback_Control_EX2 == WB_HI) 
                 Forward1 = FRW1_HI_EX2;
-            else if (Writeback_Control_EX2 == WB_LO)
+                else if (Writeback_Control_EX2 == WB_LO) 
                 Forward1 = FRW1_LO_EX2;
             else
                 Forward1 = FRW1_ALU_EX2;
