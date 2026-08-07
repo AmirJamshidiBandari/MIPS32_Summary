@@ -1,6 +1,7 @@
 /*
 There are two ALU input multiplexers, in a non forwarding situation it picks register operands, but if there is forwarding then a forwarded data is picked as ALU operand, the forwarded data comes from second execute stage, memory stage, and writeback stage.
-The second ALU input has an edge case with memory write, because when Memory1_Write_EX1 signal is true, the second register operand acts as a store data, not a value to perform operations on, therefore we want to make sure ALU doesnt recieve any forwarded second operand.
+The second ALU input has an edge case with memory write, because when Memory1_Write_EX1 signal is true, the second register operand acts as a store data, not a value to perform operations on, therefore we want to make sure ALU doesnt recieve any forwarded second operand during sw instruction,
+because ALU uses immediate and first register operand to calculate memory addess, if second register operand gets forwarded, then wrong addess will be calculated.
 */
 module ALU_Inputs (
     input forward1_t Forward1,
