@@ -1,6 +1,6 @@
 import MIPS_Definitions::*;
 /*
-This register stored the results of multiplication and division before it is stored into the main register.
+This register stores the results of multiplication and division before it is stored into the decoder stage register.
 */
 module HILO_Register (
     input logic clk,
