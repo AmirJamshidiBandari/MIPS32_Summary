@@ -1,3 +1,6 @@
+/*
+Since multiplier and divider are multicycle, this modules handles when the processor should be stalled, when mult or div should begin operation, when mult or div should end operation and send signals to HILO register and multiplexer.
+*/
 module Mult_Div_Multicycle_Control (
     input logic [6:0] cycle_div,
     input logic [5:0] cycle_mult,
@@ -21,7 +24,8 @@ always_comb begin
     stall_div = 0;
     Multicycle_HILO_Register_Enable_EX2 = 0;
     Multicycle_HILO_Select_EX2 = HILO_NONE;
-
+    
+    // Begin multicycle operation and keep it going.
     if ((ALU_Control_EX2 == ALU_MULT) || (cycle_mult > 0 && cycle_mult < 6'd32)) begin
         Multiply = 1;
     end
@@ -29,7 +33,7 @@ always_comb begin
         Divide = 1;
     end
     
-
+    // Stall the processor if multicycle operation is running and there is a dependent instruction.
     if (((Writeback_Control_ID == WB_HI) || (Writeback_Control_ID == WB_LO)) && (cycle_mult < 6'd32) && Multiply) begin
         stall_mult = 1;
     end
@@ -37,6 +41,7 @@ always_comb begin
         stall_div = 1;
     end
 
+    // End multicycle operation and send signals to HILO modules.
     if (cycle_mult == 6'd32) begin
         Multiply = 0;
         Multicycle_HILO_Register_Enable_EX2 = 1;
