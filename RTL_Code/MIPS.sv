@@ -157,6 +157,17 @@ alu_ctrl_t ALU_Control_WB;
 // =====================
 // IF STAGE
 // =====================
+    
+IF_Pipeline if_pipe(
+    .clk(clk),
+    .reset(reset),
+    .instruction_IF(instruction_IF),
+    .pc_adder_value(pc_adder_value),
+    .instruction_ID(instruction_ID),
+    .pc_adder_value_ID(pc_adder_value_ID),
+    .Stall_IF(Stall_IF),
+    .Flush_ID(Flush_ID)
+);
 PC_Register reg_pc(
     .clk(clk),
     .reset(reset),
@@ -186,22 +197,60 @@ PC_Writeback pc_wb(
 );
 
 // =====================
-// IF → ID
+// IF -> ID
 // =====================
-IF_Pipeline if_pipe(
+    
+ID_Pipeline id_pipe(
     .clk(clk),
     .reset(reset),
-    .instruction_IF(instruction_IF),
-    .pc_adder_value(pc_adder_value),
-    .instruction_ID(instruction_ID),
-    .pc_adder_value_ID(pc_adder_value_ID),
-    .Stall_IF(Stall_IF),
-    .Flush_ID(Flush_ID)
-);
 
-// =====================
-// ID STAGE
-// =====================
+    .data_out_1_ID(data_out_1_ID),
+    .data_out_2_ID(data_out_2_ID),
+    .sign_ext_imm32_ID(sign_ext_imm32_ID),
+    .pc_adder_value_ID(pc_adder_value_ID),
+    .Jump_ID(Jump_ID),
+    .Branch_ID(Branch_ID),
+    .instruction_ID(instruction_ID),
+    .Register1_Write_ID(Register1_Write_ID),
+    .Memory1_Write_ID(Memory1_Write_ID),
+    .Register1_Destination_ID(Register1_Destination_ID),
+    .HILO_Register_Enable_ID(HILO_Register_Enable_ID),
+    .ALU_Control_ID(ALU_Control_ID),
+    .Writeback_Control_ID(Writeback_Control_ID),
+    .HILO_Select_ID(HILO_Select_ID),
+    .rt_ID(rt_ID),
+    .rd_ID(rd_ID),
+    .rs_ID(rs_ID),
+    .imm16_ID(imm16_ID),
+    .target26_ID(target26_ID),
+    .data_out_2_ALUSrc_ID(data_out_2_ALUSrc_ID),
+    .Flush_Stall(Flush_Stall),
+    .ALUSrc_ID(ALUSrc_ID),
+    .Flush_Branch(Flush_Branch),
+    .ALUSrc_EX1(ALUSrc_EX1),
+    .data_out_1_EX1(data_out_1_EX1),
+    .data_out_2_EX1(data_out_2_EX1),
+    .sign_ext_imm32_EX1(sign_ext_imm32_EX1),
+    .pc_adder_value_EX1(pc_adder_value_EX1),
+    .Jump_EX1(Jump_EX1),
+    .Branch_EX1(Branch_EX1),
+    .instruction_EX1(instruction_EX1),
+    .Register1_Write_EX1(Register1_Write_EX1),
+    .Memory1_Write_EX1(Memory1_Write_EX1),
+    .Register1_Destination_EX1(Register1_Destination_EX1),
+    .HILO_Register_Enable_EX1(HILO_Register_Enable_EX1),
+    .ALU_Control_EX1(ALU_Control_EX1),
+    .Writeback_Control_EX1(Writeback_Control_EX1),
+    .HILO_Select_EX1(HILO_Select_EX1),
+    .rt_EX1(rt_EX1),
+    .rd_EX1(rd_EX1),
+    .rs_EX1(rs_EX1),
+    .target26_EX1(target26_EX1),
+    .imm16_EX1(imm16_EX1),
+    .data_out_2_ALUSrc_EX1(data_out_2_ALUSrc_EX1)
+    
+);
+    
 Instruction_Decoder decoder(
     .instruction_ID(instruction_ID),
     .op_ID(op_ID),
@@ -333,58 +382,47 @@ ALU_Sources alu_srcs(
 );
 
 // =====================
-// ID → EX
+// ID -> EX1
 // =====================
-ID_Pipeline id_pipe(
-    .clk(clk),
-    .reset(reset),
+    
+EX1_Pipeline ex1_pipe(
 
-    .data_out_1_ID(data_out_1_ID),
-    .data_out_2_ID(data_out_2_ID),
-    .sign_ext_imm32_ID(sign_ext_imm32_ID),
-    .pc_adder_value_ID(pc_adder_value_ID),
-    .Jump_ID(Jump_ID),
-    .Branch_ID(Branch_ID),
-    .instruction_ID(instruction_ID),
-    .Register1_Write_ID(Register1_Write_ID),
-    .Memory1_Write_ID(Memory1_Write_ID),
-    .Register1_Destination_ID(Register1_Destination_ID),
-    .HILO_Register_Enable_ID(HILO_Register_Enable_ID),
-    .ALU_Control_ID(ALU_Control_ID),
-    .Writeback_Control_ID(Writeback_Control_ID),
-    .HILO_Select_ID(HILO_Select_ID),
-    .rt_ID(rt_ID),
-    .rd_ID(rd_ID),
-    .rs_ID(rs_ID),
-    .imm16_ID(imm16_ID),
-    .target26_ID(target26_ID),
-    .data_out_2_ALUSrc_ID(data_out_2_ALUSrc_ID),
-    .Flush_Stall(Flush_Stall),
-    .ALUSrc_ID(ALUSrc_ID),
-    .Flush_Branch(Flush_Branch),
-    .ALUSrc_EX1(ALUSrc_EX1),
-    .data_out_1_EX1(data_out_1_EX1),
-    .data_out_2_EX1(data_out_2_EX1),
-    .sign_ext_imm32_EX1(sign_ext_imm32_EX1),
-    .pc_adder_value_EX1(pc_adder_value_EX1),
-    .Jump_EX1(Jump_EX1),
-    .Branch_EX1(Branch_EX1),
-    .instruction_EX1(instruction_EX1),
+    .reset(reset),
+    .clk(clk),
+
+    .Writeback_Control_EX1(Writeback_Control_EX1),
     .Register1_Write_EX1(Register1_Write_EX1),
     .Memory1_Write_EX1(Memory1_Write_EX1),
-    .Register1_Destination_EX1(Register1_Destination_EX1),
     .HILO_Register_Enable_EX1(HILO_Register_Enable_EX1),
-    .ALU_Control_EX1(ALU_Control_EX1),
-    .Writeback_Control_EX1(Writeback_Control_EX1),
     .HILO_Select_EX1(HILO_Select_EX1),
+    .ALU_Control_EX1(ALU_Control_EX1),
+    .instruction_EX1(instruction_EX1),
+    .ALU_input1_EX1(ALU_input1_EX1),
+    .ALU_input2_EX1(ALU_input2_EX1),
+    .store_word_EX1(store_word_EX1),
+    .LUI_imm32_result_EX1(LUI_imm32_result_EX1),
+    .data_out_2_EX_mux_EX1(data_out_2_EX_mux_EX1),
+    .data_out_1_EX_mux_EX1(data_out_1_EX_mux_EX1),
+    .data_in_address_EX1(data_in_address_EX1),
     .rt_EX1(rt_EX1),
-    .rd_EX1(rd_EX1),
-    .rs_EX1(rs_EX1),
-    .target26_EX1(target26_EX1),
-    .imm16_EX1(imm16_EX1),
-    .data_out_2_ALUSrc_EX1(data_out_2_ALUSrc_EX1)
-    
+    .Writeback_Control_EX2(Writeback_Control_EX2),
+    .Register1_Write_EX2(Register1_Write_EX2),
+    .Memory1_Write_EX2(Memory1_Write_EX2),
+    .HILO_Register_Enable_EX2(HILO_Register_Enable_EX2),
+    .HILO_Select_EX2(HILO_Select_EX2),
+    .ALU_Control_EX2(ALU_Control_EX2),
+    .instruction_EX2(instruction_EX2),
+    .ALU_input1_EX2(ALU_input1_EX2),
+    .ALU_input2_EX2(ALU_input2_EX2),
+    .store_word_EX2(store_word_EX2),
+    .LUI_imm32_result_EX2(LUI_imm32_result_EX2),
+    .data_out_2_EX_mux_EX2(data_out_2_EX_mux_EX2),
+    .data_out_1_EX_mux_EX2(data_out_1_EX_mux_EX2),
+    .data_in_address_EX2(data_in_address_EX2),
+    .rt_EX2(rt_EX2)
+
 );
+    
 Stall_Unit stall(
     .rt_ID(rt_ID),
     .rs_ID(rs_ID),
@@ -400,17 +438,6 @@ Stall_Unit stall(
     .Stall_PC(Stall_PC),
     .stall_mult(stall_mult),
     .stall_div(stall_div)
-);
-// =====================
-// EX STAGE
-// =====================
-
-
-ALU alu(
-    .ALU_input2_EX2(ALU_input2_EX2),
-    .ALU_input1_EX2(ALU_input1_EX2),
-    .ALU_Control_EX2(ALU_Control_EX2),
-    .ALU_result_EX2(ALU_result_EX2)
 );
 
 ALU_Inputs alu_inputs (
@@ -450,7 +477,7 @@ Memory_Input_Sources mem_in_srcs(
     .LUI_imm32_result_EX2(LUI_imm32_result_EX2),
     .ALU_result_EX2(ALU_result_EX2)
 );
-
+    
 Left_Shifter_2bit shifter(
     .sign_ext_imm32_EX1(sign_ext_imm32_EX1),
     .target26_EX1(target26_EX1),
@@ -493,6 +520,65 @@ MultiplierDivider_Inputs multi_inputs(
     .LUI_imm32_result_EX2(LUI_imm32_result_EX2),
     .ALU_result_EX2(ALU_result_EX2)
 );
+    
+LUI_Unit lui(
+    .imm16_EX1(imm16_EX1[15:0]),
+    .LUI_imm32_result_EX1(LUI_imm32_result_EX1)
+);
+    
+Register_Destination reg_dest (
+    .Register1_Destination_EX1(Register1_Destination_EX1),
+    .rd_EX1(rd_EX1),
+    .rt_EX1(rt_EX1),
+    .data_in_address_EX1(data_in_address_EX1)
+);
+    
+// =====================
+// EX1 -> EX2
+// =====================
+    
+EX2_Pipeline ex2_pipe(
+    .reset(reset),
+    .clk(clk),
+
+    .ALU_result_EX2(ALU_result_EX2),
+    .store_word_EX2(store_word_EX2),
+    .HI_send_EX2(HI_send_EX2),
+    .LO_send_EX2(LO_send_EX2),
+    .LUI_imm32_result_EX2(LUI_imm32_result_EX2),
+    .data_in_address_EX2(data_in_address_EX2),
+    .Register1_Write_EX2(Register1_Write_EX2),
+    .Writeback_Control_EX2(Writeback_Control_EX2),
+    .Memory1_Write_EX2(Memory1_Write_EX2),
+    .instruction_EX2(instruction_EX2),
+    .HILO_Register_Enable_EX2(HILO_Register_Enable_EX2),
+    .ALU_Control_EX2(ALU_Control_EX2),
+    .Multicycle_HILO_Register_Enable_EX2(Multicycle_HILO_Register_Enable_EX2),
+    .rt_EX2(rt_EX2),
+    .ALU_Control_ME(ALU_Control_ME),
+    .ALU_result_ME(ALU_result_ME),
+    .store_word_ME(store_word_ME),
+    .HI_send_ME(HI_send_ME),
+    .LO_send_ME(LO_send_ME),
+    .LUI_imm32_result_ME(LUI_imm32_result_ME),
+    .data_in_address_ME(data_in_address_ME),
+    .instruction_ME(instruction_ME),
+    .Register1_Write_ME(Register1_Write_ME),
+    .Writeback_Control_ME(Writeback_Control_ME),
+    .Memory1_Write_ME(Memory1_Write_ME),
+    .HILO_Register_Enable_ME(HILO_Register_Enable_ME),
+    .Multicycle_HILO_Register_Enable_ME(Multicycle_HILO_Register_Enable_ME),
+    .rt_ME(rt_ME)
+
+);
+    
+ALU alu(
+    .ALU_input2_EX2(ALU_input2_EX2),
+    .ALU_input1_EX2(ALU_input1_EX2),
+    .ALU_Control_EX2(ALU_Control_EX2),
+    .ALU_result_EX2(ALU_result_EX2)
+);
+
 
 Mult_Div_Multicycle_Control multicycle_control(
   .cycle_div(cycle_div),
@@ -532,10 +618,6 @@ Divider divider(
    .cycle_div(cycle_div)
 );
 
-LUI_Unit lui(
-    .imm16_EX1(imm16_EX1[15:0]),
-    .LUI_imm32_result_EX1(LUI_imm32_result_EX1)
-);
 
 HILO_Register_Inputs reg_hilo_inputs(
     .Multicycle_HILO_Select_EX2(Multicycle_HILO_Select_EX2),
@@ -545,24 +627,6 @@ HILO_Register_Inputs reg_hilo_inputs(
     .div_LO_EX2(div_LO_EX2),
     .HI_send_EX2(HI_send_EX2),
     .LO_send_EX2(LO_send_EX2)
-);
-
-HILO_Register reg_hilo(
-    .clk(clk),
-    .reset(reset),
-    .HILO_Register_Enable_ME(HILO_Register_Enable_ME),
-    .HI_result_ME(HI_result_ME),
-    .LO_result_ME(LO_result_ME),
-    .HI_send_ME(HI_send_ME),
-    .LO_send_ME(LO_send_ME),
-    .Multicycle_HILO_Register_Enable_ME(Multicycle_HILO_Register_Enable_ME)
-);
-
-Register_Destination reg_dest (
-    .Register1_Destination_EX1(Register1_Destination_EX1),
-    .rd_EX1(rd_EX1),
-    .rt_EX1(rt_EX1),
-    .data_in_address_EX1(data_in_address_EX1)
 );
 
 Forward_Unit forwarding_unit (
@@ -594,106 +658,9 @@ Control_Hazard_Unit ctrl_hzrd_unt(
 );
 
 // =====================
-// EX → MEM
+// EX2 -> MEM
 // =====================
-EX1_Pipeline ex1_pipe(
 
-    .reset(reset),
-    .clk(clk),
-
-    .Writeback_Control_EX1(Writeback_Control_EX1),
-    .Register1_Write_EX1(Register1_Write_EX1),
-    .Memory1_Write_EX1(Memory1_Write_EX1),
-    .HILO_Register_Enable_EX1(HILO_Register_Enable_EX1),
-    .HILO_Select_EX1(HILO_Select_EX1),
-    .ALU_Control_EX1(ALU_Control_EX1),
-    .instruction_EX1(instruction_EX1),
-    .ALU_input1_EX1(ALU_input1_EX1),
-    .ALU_input2_EX1(ALU_input2_EX1),
-    .store_word_EX1(store_word_EX1),
-    .LUI_imm32_result_EX1(LUI_imm32_result_EX1),
-    .data_out_2_EX_mux_EX1(data_out_2_EX_mux_EX1),
-    .data_out_1_EX_mux_EX1(data_out_1_EX_mux_EX1),
-    .data_in_address_EX1(data_in_address_EX1),
-    .rt_EX1(rt_EX1),
-    .Writeback_Control_EX2(Writeback_Control_EX2),
-    .Register1_Write_EX2(Register1_Write_EX2),
-    .Memory1_Write_EX2(Memory1_Write_EX2),
-    .HILO_Register_Enable_EX2(HILO_Register_Enable_EX2),
-    .HILO_Select_EX2(HILO_Select_EX2),
-    .ALU_Control_EX2(ALU_Control_EX2),
-    .instruction_EX2(instruction_EX2),
-    .ALU_input1_EX2(ALU_input1_EX2),
-    .ALU_input2_EX2(ALU_input2_EX2),
-    .store_word_EX2(store_word_EX2),
-    .LUI_imm32_result_EX2(LUI_imm32_result_EX2),
-    .data_out_2_EX_mux_EX2(data_out_2_EX_mux_EX2),
-    .data_out_1_EX_mux_EX2(data_out_1_EX_mux_EX2),
-    .data_in_address_EX2(data_in_address_EX2),
-    .rt_EX2(rt_EX2)
-
-);
-
-EX2_Pipeline ex2_pipe(
-    .reset(reset),
-    .clk(clk),
-
-    .ALU_result_EX2(ALU_result_EX2),
-    .store_word_EX2(store_word_EX2),
-    .HI_send_EX2(HI_send_EX2),
-    .LO_send_EX2(LO_send_EX2),
-    .LUI_imm32_result_EX2(LUI_imm32_result_EX2),
-    .data_in_address_EX2(data_in_address_EX2),
-    .Register1_Write_EX2(Register1_Write_EX2),
-    .Writeback_Control_EX2(Writeback_Control_EX2),
-    .Memory1_Write_EX2(Memory1_Write_EX2),
-    .instruction_EX2(instruction_EX2),
-    .HILO_Register_Enable_EX2(HILO_Register_Enable_EX2),
-    .ALU_Control_EX2(ALU_Control_EX2),
-    .Multicycle_HILO_Register_Enable_EX2(Multicycle_HILO_Register_Enable_EX2),
-    .rt_EX2(rt_EX2),
-    .ALU_Control_ME(ALU_Control_ME),
-    .ALU_result_ME(ALU_result_ME),
-    .store_word_ME(store_word_ME),
-    .HI_send_ME(HI_send_ME),
-    .LO_send_ME(LO_send_ME),
-    .LUI_imm32_result_ME(LUI_imm32_result_ME),
-    .data_in_address_ME(data_in_address_ME),
-    .instruction_ME(instruction_ME),
-    .Register1_Write_ME(Register1_Write_ME),
-    .Writeback_Control_ME(Writeback_Control_ME),
-    .Memory1_Write_ME(Memory1_Write_ME),
-    .HILO_Register_Enable_ME(HILO_Register_Enable_ME),
-    .Multicycle_HILO_Register_Enable_ME(Multicycle_HILO_Register_Enable_ME),
-    .rt_ME(rt_ME)
-
-);
-
-// =====================
-// MEM STAGE
-// =====================
-Data_Memory_1 mem_data(
-    .clk(clk),
-    .reset(reset),
-    .Memory1_Write_ME(Memory1_Write_ME),
-    .store_word_ME(store_word_ME),
-    .ALU_result_ME(ALU_result_ME),
-    .load_word_ME(load_word_ME),
-    .RAM_Write_ME(RAM_Write_ME),
-    .IO1_Write_ME(IO1_Write_ME),
-    .IO2_Write_ME(IO2_Write_ME)
-);
-
-Memory_Control_Unit mem_ctrl_unt(
-    .ALU_result_ME(ALU_result_ME),
-    .RAM_Write_ME(RAM_Write_ME),
-    .IO1_Write_ME(IO1_Write_ME),
-    .IO2_Write_ME(IO2_Write_ME)
-);
-
-// =====================
-// MEM → WB
-// =====================
 ME_Pipeline me_pipe(
     .reset(reset),
     .clk(clk),
@@ -719,9 +686,40 @@ ME_Pipeline me_pipe(
     .LUI_imm32_result_WB(LUI_imm32_result_WB),
     .data_in_address_WB(data_in_address_WB)
 );
+    
+HILO_Register reg_hilo(
+    .clk(clk),
+    .reset(reset),
+    .HILO_Register_Enable_ME(HILO_Register_Enable_ME),
+    .HI_result_ME(HI_result_ME),
+    .LO_result_ME(LO_result_ME),
+    .HI_send_ME(HI_send_ME),
+    .LO_send_ME(LO_send_ME),
+    .Multicycle_HILO_Register_Enable_ME(Multicycle_HILO_Register_Enable_ME)
+);
+    
+Data_Memory_1 mem_data(
+    .clk(clk),
+    .reset(reset),
+    .Memory1_Write_ME(Memory1_Write_ME),
+    .store_word_ME(store_word_ME),
+    .ALU_result_ME(ALU_result_ME),
+    .load_word_ME(load_word_ME),
+    .RAM_Write_ME(RAM_Write_ME),
+    .IO1_Write_ME(IO1_Write_ME),
+    .IO2_Write_ME(IO2_Write_ME)
+);
 
+Memory_Control_Unit mem_ctrl_unt(
+    .ALU_result_ME(ALU_result_ME),
+    .RAM_Write_ME(RAM_Write_ME),
+    .IO1_Write_ME(IO1_Write_ME),
+    .IO2_Write_ME(IO2_Write_ME)
+);
+
+    
 // =====================
-// WB STAGE
+//  WB STAGE
 // =====================
 Register_Writeback_1 writeback_reg1(
     .ALU_result_WB(ALU_result_WB),
