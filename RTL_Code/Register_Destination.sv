@@ -1,5 +1,5 @@
 /*
-Register destination can either come from a rt value or rd value, this depends on instruction type. 
+Register destination can either come from the rt or rd field., this depends on instruction type. 
 Therefore, a multiplexer and control unit signal is used to pick correct register address.
 */
 module Register_Destination (
