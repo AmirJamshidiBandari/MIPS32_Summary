@@ -1,6 +1,6 @@
 import MIPS_Definitions::*;
 /*
-This is the pipeline register between first execute stage and memory stage.
+This is the pipeline register between second execute stage and memory stage.
 */
 module EX2_Pipeline (
     input logic reset,
