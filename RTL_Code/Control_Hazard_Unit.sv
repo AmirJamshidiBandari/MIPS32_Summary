@@ -13,7 +13,7 @@ module Control_Hazard_Unit (
     always_comb begin
         Flush_Branch = 0;
         Flush_ID = 0;
-        if ((Branch_EX1 && Zero_Flag_EX1) || Jump_EX1) begin // Flush garbage instructions.
+        if ((Branch_EX1 && Zero_Flag_EX1) || Jump_EX1) begin // Flush wrong-path instructions.
             Flush_Branch = 1;
             Flush_ID = 1;
         end
