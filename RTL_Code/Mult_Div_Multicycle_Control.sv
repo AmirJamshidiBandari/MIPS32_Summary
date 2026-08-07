@@ -1,5 +1,5 @@
 /*
-Since multiplier and divider are multicycle, this modules handles when the processor should be stalled, when mult or div should begin operation, when mult or div should end operation and send signals to HILO register and multiplexer.
+Since multiplier and divider are multicycle, this module handles when the processor should be stalled, when mult or div should begin operation, when mult or div should end operation and send signals to HILO register and multiplexer.
 */
 module Mult_Div_Multicycle_Control (
     input logic [6:0] cycle_div,
