@@ -10,13 +10,13 @@ module Instruction_Decoder (
     output logic [25:0] target26_ID
 );
 
-assign op_ID = instruction_ID[31:26];
-assign rs_ID = instruction_ID[25:21];
-assign rt_ID = instruction_ID[20:16];
-assign rd_ID = instruction_ID[15:11];
-assign sa_ID = instruction_ID[10:6];
-assign fn_ID = instruction_ID[5:0];
-assign imm16_ID = instruction_ID[15:0];
-assign target26_ID = instruction_ID[25:0];
+    assign op_ID = instruction_ID[31:26]; // Decoded value for control unit.
+    assign rs_ID = instruction_ID[25:21]; // Decoded value for register.
+    assign rt_ID = instruction_ID[20:16]; // Decoded value for register.
+    assign rd_ID = instruction_ID[15:11]; // Decoded value for register.
+    assign sa_ID = instruction_ID[10:6]; // For current design, no use case.
+    assign fn_ID = instruction_ID[5:0]; // Decoded value for control unit.
+    assign imm16_ID = instruction_ID[15:0]; // Decoded value for immediate forming.
+    assign target26_ID = instruction_ID[25:0]; // Decoded value for jump instruction.
 
 endmodule
