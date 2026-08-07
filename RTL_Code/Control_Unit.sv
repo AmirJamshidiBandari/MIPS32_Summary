@@ -1,6 +1,6 @@
 import MIPS_Definitions::*;
 /*
-Control unit controls the behavior if instructions across the processor, it supports R, I, and J instruction types.
+Control unit controls the behavior of instructions across the processor, it supports R, I, and J instruction types.
 */
 module Control_Unit (
     input opcode_t op_ID,
