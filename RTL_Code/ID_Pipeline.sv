@@ -74,7 +74,7 @@ module ID_Pipeline (
             HILO_Register_Enable_EX1 <= 0;
             instruction_EX1 <= 0;
         end 
-        else if (Flush_Stall || Flush_Branch) begin
+        else if (Flush_Stall || Flush_Branch) begin // Flush this stage if there is a control or stall hazard.
             Register1_Write_EX1 <= 0;
             HILO_Select_EX1 <= HILO_NONE;
             Writeback_Control_EX1 <= WB_NONE;
