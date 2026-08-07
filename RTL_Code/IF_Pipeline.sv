@@ -1,3 +1,6 @@
+/*
+This is the first pipeline register
+*/
 module IF_Pipeline (
     input logic clk,
     input logic reset,
@@ -12,11 +15,11 @@ module IF_Pipeline (
         if (reset) begin
             instruction_ID <= 32'b0;
         end
-        else if (Flush_ID) begin
+        else if (Flush_ID) begin // Flush this stage.
             instruction_ID <= 0;
             pc_adder_value_ID <= 0;
         end
-        else if (!Stall_IF)begin
+        else if (!Stall_IF)begin // Stall this stage if Stall_IF is true.
             instruction_ID <= instruction_IF;
             pc_adder_value_ID <= pc_adder_value;
         end
