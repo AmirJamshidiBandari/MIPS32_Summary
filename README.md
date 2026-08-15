@@ -129,7 +129,7 @@ Combined pipeline hazard cases
 ```
 
 - [Read the verification summary](Verification/VERIFICATION_SUMMARY.md)
-- [Read the verification example](Python_Script/*PYTHON_SCRIPT.md)
+- [Read the verification example](Verification_Example/FORWARDING_EXAMPLE.md)
 
 ## Python Script Summary
 
@@ -144,7 +144,7 @@ Speed up overall verification
 Find issues and mismatches faster and more accurate
 ```
 
-- [Read the python summary](Verification/VERIFICATION_SUMMARY.md)
+- [Read the python summary](Python_Script/*PYTHON_SCRIPT.md)
 
 ## FPGA Optimization Summary
 
