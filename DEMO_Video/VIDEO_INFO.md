@@ -5,4 +5,4 @@ diagram, and how i find my critical path.
 
 The demo video is posted on YouTube with link: https://www.youtube.com/watch?v=PP14SCuXyis
 
-Clickable link: **[▶ Watch the full Pipelined MIPS32 demo on YouTube](https://www.youtube.com/watch?v=PP14SCuXyis)**
+
