@@ -133,7 +133,7 @@ Combined pipeline hazard cases
 
 ## Python Script Summary
 
-The processor is also designed in Python for reasons:
+The processor is also designed in Python to:
 
 ```text
 Automate the process of generating instructions 
