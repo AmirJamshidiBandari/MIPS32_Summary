@@ -27,11 +27,7 @@ Tool: Vivado
 
 A 3-minute 24-second video demonstrates the processor architecture, test instruction sequence, waveform verification, FPGA verification, timing report, and critical-path analysis.
 
-**[▶ Watch the full Pipelined MIPS32 demo on YouTube](https://www.youtube.com/watch?v=ER6JITL76eQ)**
-
-Additional demo information is available here:
-
-- [Demo video details](Demo_Video/DEMO_YOUTUBE.md)
+**[▶ Watch the full Pipelined MIPS32 demo on YouTube](https://www.youtube.com/watch?v=PP14SCuXyis)**
 
 ## Supported Instructions
 
