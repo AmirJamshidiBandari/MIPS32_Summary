@@ -129,7 +129,22 @@ Combined pipeline hazard cases
 ```
 
 - [Read the verification summary](Verification/VERIFICATION_SUMMARY.md)
-- [Read the verification example](Verification_Example/FORWARDING_EXAMPLE.md)
+- [Read the verification example](Python_Script/*PYTHON_SCRIPT.md)
+
+## Python Script Summary
+
+The processor is also designed in Python for reasons:
+
+```text
+Automate the process of generating instructions 
+Automate the process of testing instructions 
+Automate the process of verifying results 
+Create meaningful tests 
+Speed up overall verification
+Find issues and mismatches faster and more accurate
+```
+
+- [Read the verification summary](Verification/VERIFICATION_SUMMARY.md)
 
 ## FPGA Optimization Summary
 
