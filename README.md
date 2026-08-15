@@ -144,7 +144,7 @@ Speed up overall verification
 Find issues and mismatches faster and more accurate
 ```
 
-- [Read the verification summary](Verification/VERIFICATION_SUMMARY.md)
+- [Read the python summary](Verification/VERIFICATION_SUMMARY.md)
 
 ## FPGA Optimization Summary
 
