@@ -1,6 +1,6 @@
 """
     This is a simplified control unit compared to the SystemVerilog version, this file takes the operation set by instruciton decoder,
-and based on that instruction is will set a signal HIGH to ensure correct operations is our MIPS32 python script.
+and based on that instruction it will set a signal HIGH to ensure correct operations in our MIPS32 python script.
 """
 def control_unit(decoded_instruction_main):
     operation = decoded_instruction_main["name"]                                # Take operation from control unit.
